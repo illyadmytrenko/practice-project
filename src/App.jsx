@@ -1,18 +1,19 @@
-import { Routes, Route, Link } from "react-router-dom";
-import Favorites from "./pages/favorites";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/main-layout";
+import Home from "./pages/home/page";
+import Movie from "./pages/movie/page";
+import Favorites from "./pages/favorites/page";
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <nav>
-        <Link to="/">Головна сторінка</Link> |{" "}
-        <Link to="/favorites">Обрані</Link>
-      </nav>
+    <BrowserRouter>
       <Routes>
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="movie/:id" element={<Movie />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Route>
       </Routes>
-    </div>
+    </BrowserRouter>
   );
 }
-
-export default App;
