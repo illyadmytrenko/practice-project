@@ -10,8 +10,8 @@
     "director": "Denis Villeneuve",
     "cast": ["Timothée Chalamet", "Zendaya", "Rebecca Ferguson"],
     "rating": 8.5,
-    "poster": "/images/dune2.jpg",
-    "trailer": "https://www.youtube.com/watch?v=Way9Dexny3w",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/52/Dune_Part_Two_poster.jpeg",
+    "trailer": "https://www.youtube.com/watch?v=U2Qp5pL3ovA",
     "description": "Paul Atreides joins forces with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
     "isNowShowing": true
   },
@@ -26,7 +26,7 @@
     "director": "Adam Wingard",
     "cast": ["Rebecca Hall", "Dan Stevens", "Brian Tyree Henry"],
     "rating": 6.7,
-    "poster": "/images/godzillaxkong.jpg",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/be/Godzilla_x_kong_the_new_empire_poster.jpg",
     "trailer": "https://www.youtube.com/watch?v=lV1OOlGwExM",
     "description": "The epic battle continues with a new threat that forces Godzilla and Kong to team up.",
     "isNowShowing": true
@@ -42,14 +42,14 @@
     "director": "Mike Mitchell",
     "cast": ["Jack Black", "Awkwafina", "Bryan Cranston"],
     "rating": 7.2,
-    "poster": "/images/kungfupanda4.jpg",
-    "trailer": "https://www.youtube.com/watch?v=_inKs4eeHiI",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7f/Kung_Fu_Panda_4_poster.jpg",
+    "trailer": "https://www.youtube.com/watch?v=5o-reTATkBU&pp=0gcJCdgAo7VqN5tD",
     "description": "Po must train a new warrior while facing a new villain known as The Chameleon.",
     "isNowShowing": true
   },
   {
     "id": "4",
-    "title": "Мисливці на привидів: Крижана імперіяe",
+    "title": "Мисливці на привидів: Крижана імперія",
     "originalTitle": "Ghostbusters: Frozen Empire",
     "year": 2024,
     "genre": ["Comedy", "Fantasy"],
@@ -58,8 +58,8 @@
     "director": "Gil Kenan",
     "cast": ["Paul Rudd", "Carrie Coon", "Finn Wolfhard"],
     "rating": 6.5,
-    "poster": "/images/ghostbusters.jpg",
-    "trailer": "https://www.youtube.com/watch?v=7nPOymbYfCA",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRasknWp98XlN2krxAQz-31xjL911lVed49gw&s",
+    "trailer": "https://www.youtube.com/watch?v=wFNK_KEmcWs",
     "description": "The Spengler family returns to New York City to team up with the original Ghostbusters.",
     "isNowShowing": true
   },
@@ -74,8 +74,8 @@
     "director": "Alex Garland",
     "cast": ["Kirsten Dunst", "Wagner Moura", "Cailee Spaeny"],
     "rating": 7.8,
-    "poster": "/images/civilwar.jpg",
-    "trailer": "https://www.youtube.com/watch?v=aDyQxtgD3bk",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG5MCD4bZ_MV3_C2X7Fj6YklDdSi91PNORRQ&s",
+    "trailer": "https://www.youtube.com/watch?v=c2G18nIVpNE",
     "description": "A journey across a future-divided America in the midst of civil conflict.",
     "isNowShowing": true
   },
@@ -90,8 +90,8 @@
     "director": "Arkasha Stevenson",
     "cast": ["Nell Tiger Free", "Ralph Ineson", "Bill Nighy"],
     "rating": 6.9,
-    "poster": "/images/thefirstomen.jpg",
-    "trailer": "https://www.youtube.com/watch?v=ZKEya5U98mE",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/70/The_First_Omen_poster.jpg",
+    "trailer": "https://www.youtube.com/watch?v=lmN1Op8ygno",
     "description": "A young American woman uncovers a sinister conspiracy in the Vatican.",
     "isNowShowing": true
   },
@@ -106,8 +106,8 @@
     "director": "Sam Taylor-Johnson",
     "cast": ["Marisa Abela", "Jack O'Connell", "Eddie Marsan"],
     "rating": 7.1,
-    "poster": "/images/backtoblack.jpg",
-    "trailer": "https://www.youtube.com/watch?v=rULz9gLfxfc",
+    "poster": "https://cdn.planetakino.ua/405_back-to-black1_2024/Media/Posters/vertical/opt_f14c236e-df92-456b-878b-33067bbec068.jpg",
+    "trailer": "https://www.youtube.com/watch?v=q9Y_4TYYdDQ",
     "description": "A biopic of singer Amy Winehouse, focusing on her early rise to fame.",
     "isNowShowing": true
   },
@@ -122,8 +122,8 @@
     "director": "Dev Patel",
     "cast": ["Dev Patel", "Sharlto Copley", "Pitobash"],
     "rating": 7.6,
-    "poster": "/images/monkeyman.jpg",
-    "trailer": "https://www.youtube.com/watch?v=4C2qP2-9kzI",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/2b/Monkey_Man_film.jpg",
+    "trailer": "https://www.youtube.com/watch?v=k42gFf2fLO8",
     "description": "An ex-convict fights his way through the criminal underworld to seek revenge.",
     "isNowShowing": true
   }

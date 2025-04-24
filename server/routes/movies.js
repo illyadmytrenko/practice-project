@@ -8,8 +8,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const moviesPath = path.join(__dirname, "..", "movies.json");
 
-console.log(moviesPath);
-
 router.get("/", (req, res) => {
   fs.readFile(moviesPath, "utf-8", (err, data) => {
     if (err)
