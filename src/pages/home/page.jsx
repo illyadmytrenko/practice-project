@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
 import MoviePoster from "../../components/movie-poster/movie-poster";
-import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { useMovies } from "../../context/movies-context";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 export default function HomePage() {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/movies")
-      .then((response) => {
-        setMovies(response.data);
-      })
-      .catch((error) => {
-        console.error("Ошибка при загрузке фильмов:", error);
-      });
-  }, []);
+  const { movies } = useMovies();
 
   return (
     <section className="relative">
