@@ -91,4 +91,27 @@ body {
   font-family: "Oswald", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 24px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0a690a;
+  border-radius: 4px;
+  border: 2px solid black;
+}
+
+* {
+  scrollbar-width: 24px;
+  scrollbar-color: #0a690a transparent;
+}
+
 @import "tailwindcss";
