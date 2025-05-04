@@ -49,10 +49,10 @@ export default function ModalSearch() {
           foundMovies.map((movie) => (
             <MoviePoster
               key={movie.id}
-              moviePoster={movie}
+              movie={movie}
               className="!h-full"
               classNameImg="!h-full"
-              isInModal={true}
+              isInModal
             />
           ))
         )}

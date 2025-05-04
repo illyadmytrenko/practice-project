@@ -6,15 +6,30 @@ export default function Header() {
     useModalSearch();
 
   return (
-    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col min-[550px]:flex-row gap-5 min-[550px]:gap-[60px] md:gap-20 justify-between items-center">
+    <div className="relative !p-5 sm:!p-8 text-white z-10 flex flex-col min-[550px]:flex-row gap-5 min-[550px]:gap-[60px] md:gap-20 justify-between items-center after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
       <nav
         className={`!flex gap-10 text-2xl font-semibold transition duration-300 ${
           isModalWindowOpen ? "blur-sm pointer-events-none" : ""
         }`}
       >
-        <Link to={"/"}>Home</Link>
-        <Link to={"/favorites"}>Favorites</Link>
-        <Link to={"/schedule"}>Schedule</Link>
+        <Link
+          to={"/"}
+          className="transition-colors duration-300 hover:text-green-400"
+        >
+          Home
+        </Link>
+        <Link
+          to={"/favorites"}
+          className="transition-colors duration-300 hover:text-green-400"
+        >
+          Favorites
+        </Link>
+        <Link
+          to={"/schedule"}
+          className="transition-colors duration-300 hover:text-green-400"
+        >
+          Schedule
+        </Link>
       </nav>
 
       <div className="relative z-20">
