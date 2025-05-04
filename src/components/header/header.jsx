@@ -7,7 +7,7 @@ export default function Header() {
     useModalSearch();
 
   return (
-    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col min-[650px]:flex-row gap-5 min-[650px]:gap-[60px] md:gap-20 justify-between items-center">
+    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col min-[650px]:flex-row gap-5 min-[650px]:gap-[60px] md:gap-20 justify-between items-center relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
       <Logo />
       <nav
         className={`!flex gap-10 text-2xl font-semibold transition duration-300 ${

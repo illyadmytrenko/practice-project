@@ -7,8 +7,13 @@ export default function Footer() {
       <div className="flex flex-col min-[450px]:flex-row gap-3 min-[450px]:gap-20 justify-between items-center !px-6">
         <Logo />
         <div className="text-xs text-gray-500">
-          <p>Email: support@movietime.com</p>
-          <p>Телефон: +38 (050) 123-45-67</p>
+          <p>
+            Email:{" "}
+            <a href="mailto:support@movietime.com">support@movietime.com</a>
+          </p>
+          <p>
+            Телефон: <a href="tel:+380501234567">+38 (050) 123-45-67</a>
+          </p>
         </div>
         <p className="text-xs text-gray-500 px-6">
           © {new Date().getFullYear()} Усі права захищено.
