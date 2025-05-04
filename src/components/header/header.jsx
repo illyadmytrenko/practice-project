@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useModalSearch } from "../../context/modal-search-context";
+import Logo from "../logo/logo";
 
 export default function Header() {
   const { isModalWindowOpen, setIsModalWindowOpen, setSearchString } =
@@ -7,6 +8,8 @@ export default function Header() {
 
   return (
     <div className="relative !p-5 sm:!p-8 text-white z-10 flex flex-col min-[550px]:flex-row gap-5 min-[550px]:gap-[60px] md:gap-20 justify-between items-center after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
+    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col min-[650px]:flex-row gap-5 min-[650px]:gap-[60px] md:gap-20 justify-between items-center">
+      <Logo />
       <nav
         className={`!flex gap-10 text-2xl font-semibold transition duration-300 ${
           isModalWindowOpen ? "blur-sm pointer-events-none" : ""

@@ -39,6 +39,8 @@ export default function MainLayout() {
           </div>
         </div>
       </div>
+
+      {/* Модальне вікно */}
       <ModalSearch />
     </>
   );
