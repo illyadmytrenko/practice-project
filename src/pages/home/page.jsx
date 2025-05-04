@@ -35,7 +35,7 @@ export default function HomePage() {
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id} className="w-full">
-            <MoviePoster moviePoster={movie} />
+            <MoviePoster movie={movie} />
           </SwiperSlide>
         ))}
       </Swiper>
