@@ -16,8 +16,6 @@ export default function MainLayout() {
 
   const location = useLocation();
 
-  const location = useLocation();
-
   return (
     <>
       <div
