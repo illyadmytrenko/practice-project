@@ -15,7 +15,7 @@ export default function BreadcrumbsComponent({ location }) {
         Home
       </Link>
       <Link
-        to={`/${location}`}
+        to={`${location}`}
         className="text-gray-300 transition-colors duration-300 hover:text-green-400"
       >
         {location.charAt(1).toUpperCase() + location.slice(2)}
