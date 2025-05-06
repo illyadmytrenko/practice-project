@@ -3,14 +3,14 @@ import { createContext, useContext, useState } from "react";
 const ModalSearchContext = createContext(null);
 
 export function ModalSearchProvider({ children }) {
-  const [isModalWindowOpen, setIsModalWindowOpen] = useState(false);
+  const [isModalWindowSearchOpen, setIsModalWindowSearchOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
 
   return (
     <ModalSearchContext.Provider
       value={{
-        isModalWindowOpen,
-        setIsModalWindowOpen,
+        isModalWindowSearchOpen,
+        setIsModalWindowSearchOpen,
         searchString,
         setSearchString,
       }}

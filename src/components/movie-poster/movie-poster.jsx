@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLikedMovies } from "../../context/liked-movies-context";
 
 export default function MoviePoster({
-  moviePoster,
+  movie,
   className = "",
   classNameImg = "",
   isInModal = false,
@@ -19,6 +20,8 @@ export default function MoviePoster({
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  const { toggleLike, isLiked } = useLikedMovies();
+
   return (
     <div
       className={`relative inline-block w-full h-screen ${className}`}
@@ -26,8 +29,8 @@ export default function MoviePoster({
       onMouseLeave={() => setIsHovered(false)}
     >
       <img
-        src={moviePoster.poster}
-        alt={moviePoster.title}
+        src={movie.poster}
+        alt={movie.title}
         className={`w-full h-screen transition duration-300 ease-in-out ${
           isHovered ? "blur-sm " : ""
         } ${classNameImg}`}
@@ -40,14 +43,14 @@ export default function MoviePoster({
       )}
       {!isInModal && (
         <h4 className="absolute top-[75%] left-1/2 transform -translate-x-1/2 text-white text-4xl font-bold text-center w-[90%] z-20">
-          {moviePoster.title}
+          {movie.title}
         </h4>
       )}
       {isHovered && (
-        <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 w-[90%] text-white text-xl font-semibold flex justify-between gap-10 z-20">
+        <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 w-[90%] text-white text-xl font-semibold flex flex-col gap-10 z-20">
           <div
             className="flex gap-2 items-center cursor-pointer group"
-            onClick={() => viewMoreDetails(moviePoster.id)}
+            onClick={() => viewMoreDetails(movie.id)}
           >
             <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
               <img
@@ -60,7 +63,7 @@ export default function MoviePoster({
           </div>
           <div
             className="flex gap-2 items-center cursor-pointer group"
-            onClick={() => viewTrailer(moviePoster.trailer)}
+            onClick={() => viewTrailer(movie.trailer)}
           >
             <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
               <img
@@ -70,6 +73,25 @@ export default function MoviePoster({
               />
             </div>
             <span>Дивитися трейлер</span>
+          </div>
+          <div
+            className="flex gap-2 items-center cursor-pointer group"
+            onClick={() => toggleLike(movie)}
+          >
+            <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
+              <img
+                src="./assets/icons/like.png"
+                alt="like icon"
+                className={`h-10 w-auto ${
+                  isLiked(movie.id) ? "transform rotate-180" : ""
+                }`}
+              />
+            </div>
+            <span>
+              {isLiked(movie.id)
+                ? "Видалити з улюблених"
+                : "Додати до улюблених"}
+            </span>
           </div>
         </div>
       )}
