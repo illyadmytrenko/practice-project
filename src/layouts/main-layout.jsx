@@ -7,11 +7,14 @@ import BreadcrumbsComponent from "../components/breadcrumbs/breadcrumbs";
 import { useModalAccount } from "../context/modal-account-context";
 import ModalAccount from "../components/modal-account/modal-account";
 
+
 export default function MainLayout() {
   const { isModalWindowSearchOpen, setIsModalWindowSearchOpen } =
     useModalSearch();
   const { isModalWindowAccountOpen, setIsModalWindowAccountOpen } =
     useModalAccount();
+
+  const location = useLocation();
 
   const location = useLocation();
 
@@ -49,6 +52,8 @@ export default function MainLayout() {
           </div>
         </div>
       </div>
+
+      {/* Модальне вікно */}
       <ModalSearch />
       <ModalAccount />
     </>
