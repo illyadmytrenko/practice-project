@@ -50,6 +50,11 @@ export default function Header() {
           className="transition-colors duration-300 hover:text-green-400"
         >
           Schedule
+        </Link>        <Link
+          to={"/search"}
+          className="transition-colors duration-300 hover:text-green-400"
+        >
+          Search
         </Link>
       </nav>
 
