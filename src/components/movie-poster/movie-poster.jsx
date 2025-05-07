@@ -31,7 +31,7 @@ export default function MoviePoster({
       <img
         src={movie.poster}
         alt={movie.title}
-        className={`w-full h-screen transition duration-300 ease-in-out ${
+        className={`w-full h-screen transition duration-300 object-cover ease-in-out ${
           isHovered ? "blur-sm " : ""
         } ${classNameImg}`}
       />
@@ -42,9 +42,13 @@ export default function MoviePoster({
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent pointer-events-none" />
       )}
       {!isInModal && (
-        <h4 className="absolute top-[75%] left-1/2 transform -translate-x-1/2 text-white text-4xl font-bold text-center w-[90%] z-20">
-          {movie.title}
-        </h4>
+        <div className="absolute top-[60%] min-[400px]:top-[65%] md:top-[75%] left-1/2 transform -translate-x-1/2 text-white text-4xl font-bold text-center w-[90%] z-20 flex flex-col gap-2">
+          <h4 className="text-white text-3xl font-bold">{movie.title}</h4>
+          <p className="text-lg text-gray-300 mt-1 flex items-center justify-center">
+            {movie.genre.join(", ")} • {movie.year} • ⭐{movie.rating} •{" "}
+            {movie.ageRestriction}
+          </p>
+        </div>
       )}
       {isHovered && (
         <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 w-[90%] text-white text-xl font-semibold flex flex-col gap-10 z-20">

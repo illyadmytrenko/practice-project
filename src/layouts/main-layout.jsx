@@ -7,7 +7,6 @@ import BreadcrumbsComponent from "../components/breadcrumbs/breadcrumbs";
 import { useModalAccount } from "../context/modal-account-context";
 import ModalAccount from "../components/modal-account/modal-account";
 
-
 export default function MainLayout() {
   const { isModalWindowSearchOpen, setIsModalWindowSearchOpen } =
     useModalSearch();
@@ -19,9 +18,7 @@ export default function MainLayout() {
   return (
     <>
       <div
-        className={`min-h-screen flex flex-col bg-black relative overflow-hidden ${
-          isModalWindowAccountOpen ? "blur-sm pointer-events-none" : ""
-        }`}
+        className="min-h-screen flex flex-col bg-black relative overflow-hidden"
         onClick={() => {
           setIsModalWindowSearchOpen(false);
           setIsModalWindowAccountOpen(false);
@@ -29,7 +26,11 @@ export default function MainLayout() {
       >
         <div className="absolute inset-0 bg-[radial-gradient(at_bottom_left,_rgba(34,197,94,0.4),_transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(at_top_right,_rgba(34,197,94,0.4),_transparent_50%)]"></div>
-        <div className="z-50">
+        <div
+          className={`z-50 ${
+            isModalWindowAccountOpen ? "blur-sm pointer-events-none" : ""
+          }`}
+        >
           <Header />
           <div
             className={`${
@@ -37,8 +38,10 @@ export default function MainLayout() {
             }`}
           >
             <main
-              className={`flex-grow ${
-                location.pathname !== "/" ? "!mx-20" : ""
+              className={`flex-grow min-h-screen ${
+                location.pathname !== "/"
+                  ? "!mx-6 sm:!mx-8 md:!mx-10 lg:!mx-20"
+                  : ""
               }`}
             >
               {location.pathname !== "/" && (
@@ -50,8 +53,6 @@ export default function MainLayout() {
           </div>
         </div>
       </div>
-
-      {/* Модальне вікно */}
       <ModalSearch />
       <ModalAccount />
     </>

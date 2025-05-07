@@ -4,7 +4,7 @@ import Home from "./pages/home/page";
 import Movie from "./pages/movie/page";
 import Favorites from "./pages/favorites/page";
 import Schedule from "./pages/schedule/page";
-import Search from "./pages/search/page";
+import MoviesList from "./pages/movies-list/page";
 import AppProvider from "./context/app-provider";
 import PersonalAccount from "./pages/personal-account/page";
 import { useModalAccount } from "./context/modal-account-context";
@@ -32,7 +32,7 @@ export default function App() {
             <Route path="movie/:id" element={<Movie />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path="schedule" element={<Schedule />} />
-            <Route path="search" element={<Search />} />
+            <Route path="movies-list" element={<MoviesList />} />
             <Route
               path="profile"
               element={
