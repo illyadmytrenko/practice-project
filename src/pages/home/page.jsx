@@ -33,11 +33,14 @@ export default function HomePage() {
         }}
         modules={[Navigation]}
       >
-        {movies.map((movie) => (
-          <SwiperSlide key={movie.id} className="w-full">
-            <MoviePoster movie={movie} />
-          </SwiperSlide>
-        ))}
+        {movies
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 8)
+          .map((movie) => (
+            <SwiperSlide key={movie.id} className="w-full">
+              <MoviePoster movie={movie} />
+            </SwiperSlide>
+          ))}
       </Swiper>
 
       <div className="swiper-button-prev bg-green-600 p-3 rounded-full absolute top-1/2 left-0 -translate-y-1/2 z-10 hover:bg-green-700 cursor-pointer transition-colors h-16! w-16! md:h-20! md:w-20! text-white! border-black! border-2! after:text-4xl! after:font-bold!"></div>

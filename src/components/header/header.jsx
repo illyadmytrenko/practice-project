@@ -26,10 +26,10 @@ export default function Header() {
   };
 
   return (
-    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col min-[650px]:flex-row gap-5 min-[650px]:gap-[60px] md:gap-20 justify-between items-center relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
+    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col md:flex-row gap-5 md:gap-[60px] flex-wrap justify-between items-center relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
       <Logo />
       <nav
-        className={`!flex gap-10 text-2xl font-semibold transition duration-300 ${
+        className={`!flex flex-wrap justify-center gap-10 text-2xl font-semibold transition duration-300 ${
           isModalWindowSearchOpen ? "blur-sm pointer-events-none" : ""
         }`}
       >
@@ -50,11 +50,12 @@ export default function Header() {
           className="transition-colors duration-300 hover:text-green-400"
         >
           Schedule
-        </Link>        <Link
-          to={"/search"}
+        </Link>{" "}
+        <Link
+          to={"/movies-list"}
           className="transition-colors duration-300 hover:text-green-400"
         >
-          Search
+          Movies List
         </Link>
       </nav>
 

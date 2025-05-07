@@ -3,7 +3,7 @@ import Logo from "../logo/logo";
 
 export default function Footer() {
   return (
-    <footer className="text-gray-400 !p-3 sm:!p-5 relative z-50">
+    <footer className="text-gray-400 !p-3 sm:!p-5 relative z-50 relative after:absolute after:top-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-green-400 after:to-black">
       <div className="flex flex-col min-[450px]:flex-row gap-3 min-[450px]:gap-20 justify-between items-center !px-6">
         <Logo />
         <div className="text-xs text-gray-500">
