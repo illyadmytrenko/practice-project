@@ -4,7 +4,7 @@ import moviesRoutes from "./routes/movies.js";
 import userRoutes from "./routes/users.js";
 
 const app = express();
-const PORT = 5000;
+const PORT = 5050;
 
 app.use(cors());
 app.use(json());
