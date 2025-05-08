@@ -7,6 +7,7 @@ import Schedule from "./pages/schedule/page";
 import MoviesList from "./pages/movies-list/page";
 import AppProvider from "./context/app-provider";
 import PersonalAccount from "./pages/personal-account/page";
+import Privacy from "./pages/privacy/page";
 import { useModalAccount } from "./context/modal-account-context";
 
 function ProtectedRoute({ children }) {
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="favorites" element={<Favorites />} />
             <Route path="schedule" element={<Schedule />} />
             <Route path="movies-list" element={<MoviesList />} />
+            <Route path="privacy" element={<Privacy />} />  
             <Route
               path="profile"
               element={

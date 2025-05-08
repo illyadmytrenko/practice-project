@@ -1,0 +1,70 @@
+/* src/pages/privacy/Privacy.css */
+
+/* Глобальні стилі */
+body {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    background-color: transparent;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Основний контейнер */
+  .privacy-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background-color: rgba(0, 0, 0, 0.3); /* напівпрозорий темний фон */
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 20px rgba(0, 255, 100, 0.2);
+  }
+  
+  /* Заголовки */
+  .privacy-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: left;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #00ff88;
+    padding-bottom: 0.5rem;
+  }
+  
+  .privacy-container h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #00ff88;
+    border-left: 4px solid #00ff88;
+    padding-left: 0.75rem;
+  }
+  
+  /* Текст */
+  .privacy-text {
+    font-size: 1.125rem;
+    color: #e0e0e0;
+    text-align: justify;
+    margin-bottom: 1rem;
+  }
+  
+  /* Списки */
+  .privacy-container ul {
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+    list-style: disc;
+  }
+  
+  .privacy-container li {
+    margin-bottom: 0.5rem;
+    color: #d0d0d0;
+  }
+  
+  /* Посилання або email */
+  .privacy-container strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
