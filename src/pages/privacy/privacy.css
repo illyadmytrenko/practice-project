@@ -1,0 +1,38 @@
+/* src/pages/privacy/Privacy.css */
+
+/* Глобальні стилі для шрифтів і кольорів */
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif; /* Адаптуйте шрифт відповідно до вашого сайту */
+    background-color: transparent; /* Фон всього сайту прозорий */
+    color: #fff; /* Білий колір тексту */
+  }
+  
+  /* Стилі для сторінки Privacy */
+  .privacy-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: transparent; /* Прозорий фон для контейнера */
+    border-radius: 10px;
+    box-shadow: none; /* Забираємо тінь */
+  }
+  
+  .privacy-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff; /* Білий колір для заголовка */
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .privacy-text {
+    font-size: 1.125rem;
+    color: #fff; /* Білий текст */
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .privacy-text:first-child {
+    margin-top: 0;
+  }
+  

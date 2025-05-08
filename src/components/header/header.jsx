@@ -57,6 +57,14 @@ export default function Header() {
         >
           Movies List
         </Link>
+
+        <Link
+          to={"/privacy"}
+          className="transition-colors duration-300 hover:text-green-400"
+        >
+          Privacy
+        </Link>
+        
       </nav>
 
       <div className="relative z-20 flex gap-5 items-center">
