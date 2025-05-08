@@ -6,7 +6,7 @@ import React from "react";
 function Privacy() {
   return (
     <div className="privacy-container">
-      <h1 className="privacy-title">卐  Privacy Policy  卐 </h1>
+      <h1 className="privacy-title">Privacy Policy</h1>
 
       <p className="privacy-text"><strong>Last updated: May 8, 2025</strong></p>
 
