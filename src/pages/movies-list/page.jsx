@@ -21,6 +21,13 @@ export default function MoviesList() {
   const allYears = [...new Set(movies.map((movie) => movie.year))].sort(
     (a, b) => b - a
   );
+  const allAgeRestrictions = [
+    ...new Set(movies.flatMap((movie) => movie.ageRestriction)),
+  ].sort((a, b) => {
+    const numA = parseInt(a, 10);
+    const numB = parseInt(b, 10);
+    return numA - numB;
+  });
 
   useEffect(() => {
     setShownMovies(movies);
@@ -186,11 +193,7 @@ export default function MoviesList() {
         <Select
           isMulti
           placeholder="Age restriction"
-          options={[
-            { value: "12+", label: "12+" },
-            { value: "16+", label: "16+" },
-            { value: "18+", label: "18+" },
-          ]}
+          options={allAgeRestrictions.map((a) => ({ value: a, label: a }))}
           onChange={(e) =>
             handleFilterChange(
               "ageRestrictions",
