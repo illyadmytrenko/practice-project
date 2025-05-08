@@ -8,7 +8,8 @@ export function MoviesProvider({ children }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5050/api/movies")
+      // .get("http://localhost:5050/api/movies")
+      .get("http://localhost:5000/api/movies")
       .then((res) => setMovies(res.data))
       .catch((err) => console.error("Помилка при завантаженні фільмів:", err));
   }, []);
