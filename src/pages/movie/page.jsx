@@ -82,7 +82,7 @@ export default function MoviePage() {
     <div className="!px-6 text-white !pb-8 flex flex-col gap-6">
       <div className="flex flex-col-reverse lg:flex-row justify-between gap-12">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
-          <div className="max-w-[350px] flex flex-col items-center gap-6">
+          <div className="w-full md:w-[300px] flex flex-col items-center gap-6">
             <img
               src={movie.poster}
               alt={movie.title}
