@@ -30,11 +30,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path="movie/:id" element={<Movie />} />
+            <Route path="movie/:id/:title" element={<Movie />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path="schedule" element={<Schedule />} />
             <Route path="movies-list" element={<MoviesList />} />
-            <Route path="privacy" element={<Privacy />} />  
+            <Route path="privacy" element={<Privacy />} />
             <Route
               path="profile"
               element={

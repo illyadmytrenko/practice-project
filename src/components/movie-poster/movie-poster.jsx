@@ -12,8 +12,8 @@ export default function MoviePoster({
 
   const navigate = useNavigate();
 
-  const viewMoreDetails = (id) => {
-    navigate(`/movie/${id}`);
+  const viewMoreDetails = (id, title) => {
+    navigate(`/movie/${id}/${title}`);
   };
 
   const viewTrailer = (url) => {
@@ -54,7 +54,7 @@ export default function MoviePoster({
         <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 w-[90%] text-white text-xl font-semibold flex flex-col gap-10 z-20">
           <div
             className="flex gap-2 items-center cursor-pointer group"
-            onClick={() => viewMoreDetails(movie.id)}
+            onClick={() => viewMoreDetails(movie.id, movie.title)}
           >
             <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
               <img
