@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MoviePoster from "../../components/movie-poster/movie-poster";
 import { useMovies } from "../../context/movies-context";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import CustomInput from "../../components/custom-input/custom-input";
+import { selectStyles } from "../../constants/select-styles";
 
 export default function MoviesList() {
   const { movies } = useMovies();
@@ -93,49 +94,6 @@ export default function MoviesList() {
     );
   }, [movies, filters]);
 
-  const selectStyles = {
-    control: (base, state) => ({
-      ...base,
-      backgroundColor: "#333333",
-      borderColor: state.hasValue ? "green" : "#333333",
-      boxShadow: state.hasValue ? "0 0 0 1px green" : "none",
-      color: "white",
-      "&:hover": {
-        borderColor: state.hasValue ? "green" : "#555555",
-      },
-    }),
-    option: (base, state) => ({
-      ...base,
-      backgroundColor: state.isFocused ? "#444444" : "#333333",
-      color: "white",
-      cursor: "pointer",
-    }),
-    singleValue: (base) => ({
-      ...base,
-      color: "white",
-    }),
-    menu: (base) => ({
-      ...base,
-      backgroundColor: "#333333",
-    }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: "#555555",
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: "white",
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: "white",
-      ":hover": {
-        backgroundColor: "#777777",
-        color: "black",
-      },
-    }),
-  };
-
   const animatedComponents = makeAnimated();
 
   return (
@@ -224,7 +182,7 @@ export default function MoviesList() {
           Clear filters
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 max-h-[200vh] overflow-auto">
         {shownMovies.length > 0 ? (
           shownMovies.map((movie) => (
             <MoviePoster
