@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { uk } from "date-fns/locale";
+import { useModalAccount } from "../../context/modal-account-context";
 
 export default function Cart() {
   const { state } = useLocation();
   const [schedule, setSchedule] = useState([]);
 
   useEffect(() => {
+    // axios.get("http://localhost:5050/api/schedule").then((response) => {
     axios.get("http://localhost:5000/api/schedule").then((response) => {
       setSchedule(response.data);
     });
@@ -16,6 +18,19 @@ export default function Cart() {
 
   const [chosenSeats, setChosenSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const { isModalWindowAccountOpen, setIsModalWindowAccountOpen } =
+    useModalAccount();
+  const token = localStorage.getItem("token");
+
+  console.log(isModalWindowAccountOpen);
+
+  useEffect(() => {
+    if (chosenSeats.length > 0) {
+      sessionStorage.setItem("chosenSeats", JSON.stringify(chosenSeats));
+      sessionStorage.setItem("totalPrice", totalPrice);
+    }
+  }, [chosenSeats, totalPrice]);
 
   const handleChooseSeat = (seat) => {
     const exists = chosenSeats.some(
@@ -85,31 +100,51 @@ export default function Cart() {
       });
   }, [movieId]);
 
-  const handlePayment = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: 15000,
-          redirectUrl: "https://your-site.com/success",
-          reference: "ORDER_12345",
-          comment: "2 квитки на 20:00",
-        }),
-      });
+  const handlePayment = async (e) => {
+    e.stopPropagation();
+    if (!token) {
+      setIsModalWindowAccountOpen(true);
+      return;
+    } else {
+      const storedSeats =
+        JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
+      const storedTotalPrice = sessionStorage.getItem("totalPrice") || 0;
 
-      const data = await response.json();
+      try {
+        // const response = await fetch("http://localhost:5050/api/payment", {
+        const response = await fetch("http://localhost:5000/api/payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: storedTotalPrice * 100,
+            redirectUrl: "http://localhost:5173/",
+            name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
+            qty: storedSeats.length,
+            sum: price * 100,
+            icon: movie.poster,
+            userId: 1746520854579,
+            movieId,
+            date,
+            time,
+            hall,
+            seats: storedSeats,
+          }),
+        });
 
-      if (response.ok) {
-        // Наприклад, переходимо за посиланням для оплати
-        window.location.href = data.pageUrl;
-      } else {
-        console.error("Payment error:", data);
-        alert("Помилка під час створення рахунку");
+        const data = await response.json();
+
+        if (response.ok) {
+          sessionStorage.removeItem("chosenSeats");
+          sessionStorage.removeItem("totalPrice");
+          window.location.href = data.pageUrl;
+        } else {
+          console.error("Payment error:", data);
+          alert("Помилка під час створення рахунку");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Щось пішло не так");
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
-      alert("Щось пішло не так");
     }
   };
 
@@ -162,7 +197,7 @@ export default function Cart() {
               <div className="bg-zinc-500">
                 <img
                   src="./assets/icons/ticket.png"
-                  alt="time icon"
+                  alt="ticket icon"
                   className="w-20 !p-3"
                 />
               </div>
@@ -182,30 +217,45 @@ export default function Cart() {
                     {Array.from({
                       length: schedule.find((h) => h.hall === Number(hall))
                         .seatsPerRow,
-                    }).map((_, seatIndex) => (
-                      <div
-                        key={seatIndex}
-                        onClick={() =>
-                          handleChooseSeat({
-                            row: rowIndex + 1,
-                            seat: seatIndex + 1,
-                          })
-                        }
-                        className={`flex-1 bg-gray-500 rounded hover:bg-green-500 cursor-pointer !py-4 ${
-                          chosenSeats.some(
-                            (seat) =>
-                              seat.row === rowIndex + 1 &&
-                              seat.seat === seatIndex + 1
+                    }).map((_, seatIndex) => {
+                      const isSeatOccupied = schedule
+                        .find((h) => h.hall === Number(hall))
+                        ?.schedule?.some((s) =>
+                          s.seats.some(
+                            (occupiedSeat) =>
+                              occupiedSeat.row === rowIndex + 1 &&
+                              occupiedSeat.seat === seatIndex + 1
                           )
-                            ? "bg-red-500"
-                            : ""
-                        }`}
-                      >
-                        <span className="text-lg text-white flex justify-center items-center h-full">
-                          {seatIndex + 1}
-                        </span>
-                      </div>
-                    ))}
+                        );
+                      return (
+                        <div
+                          key={seatIndex}
+                          onClick={() =>
+                            handleChooseSeat({
+                              row: rowIndex + 1,
+                              seat: seatIndex + 1,
+                            })
+                          }
+                          className={`flex-1 bg-gray-500 rounded hover:bg-green-500 cursor-pointer !py-4   ${
+                            isSeatOccupied
+                              ? "bg-gray-950 !cursor-not-allowed pointer-events-none"
+                              : "bg-gray-500 hover:bg-green-500"
+                          } ${
+                            chosenSeats.some(
+                              (seat) =>
+                                seat.row === rowIndex + 1 &&
+                                seat.seat === seatIndex + 1
+                            )
+                              ? "bg-red-500"
+                              : ""
+                          }`}
+                        >
+                          <span className="text-lg text-white flex justify-center items-center h-full">
+                            {seatIndex + 1}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 ))}
             </div>

@@ -3,7 +3,18 @@
     "id": 1746520854579,
     "name": "Papushina Liza",
     "email": "lizapapushina@gmail.com",
-    "password": "$2b$10$kHGkLwkuOYy.mQxF6KTMfexA32sVzGI1pQYh8FTbn3OnVmdSMVP0S"
+    "password": "$2b$10$kHGkLwkuOYy.mQxF6KTMfexA32sVzGI1pQYh8FTbn3OnVmdSMVP0S",
+    "tickets": [
+      {
+        "movieId": "3",
+        "date": "2025-05-11",
+        "time": "19:30",
+        "hall": 6,
+        "row": 7,
+        "seat": 5,
+        "price": 130
+      }
+    ]
   },
   {
     "id": 1746526035945,
