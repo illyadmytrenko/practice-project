@@ -5,6 +5,8 @@ import MoviePoster from "../../components/movie-poster/movie-poster";
 import { useMemo } from "react";
 import { getNextDays } from "../../functions/get-next-days";
 import { toMinutes } from "../../functions/to-minutes";
+import { navigateToBuyTicket } from "../../functions/navigate-to-buy-ticket";
+import { useNavigate } from "react-router-dom";
 
 export default function Schedule() {
   const todayDate = useMemo(() => new Date().toISOString().split("T")[0], []);
@@ -15,6 +17,8 @@ export default function Schedule() {
 
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const navigate = useNavigate();
 
   const getUpcomingSessions = (movieId) => {
     return schedule
@@ -49,7 +53,7 @@ export default function Schedule() {
   }, []);
 
   return (
-    <div className="text-white !p-6 max-h-[200vh] overflow-auto">
+    <div className="text-white !px-3 sm:!px-6 !pb-12 max-h-[200vh] overflow-auto">
       <div className="flex gap-3 !mb-6 overflow-x-auto">
         {getNextDays().map((date) => (
           <button
@@ -84,6 +88,17 @@ export default function Schedule() {
                   <div
                     key={index}
                     className="bg-zinc-800 hover:bg-zinc-700 !p-3 rounded shadow text-sm cursor-pointer w-fit"
+                    onClick={() =>
+                      navigateToBuyTicket(
+                        navigate,
+                        movie.id,
+                        session.hall,
+                        selectedDate,
+                        session.time,
+                        session.price,
+                        movie.duration
+                      )
+                    }
                   >
                     <p className="font-medium">{session.time}</p>
                     <p className="text-gray-400 text-xs">Hall {session.hall}</p>

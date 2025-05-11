@@ -6,6 +6,7 @@ import Select from "react-select";
 import { selectStyles } from "../../constants/select-styles";
 import { getNextDays } from "../../functions/get-next-days";
 import { toMinutes } from "../../functions/to-minutes";
+import { navigateToBuyTicket } from "../../functions/navigate-to-buy-ticket";
 
 export default function MoviePage() {
   const { id } = useParams();
@@ -79,7 +80,7 @@ export default function MoviePage() {
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   return (
-    <div className="!px-6 text-white !pb-8 flex flex-col gap-6">
+    <div className="text-white !px-3 sm:!px-6 !pb-12 flex flex-col gap-6">
       <div className="flex flex-col-reverse lg:flex-row justify-between gap-12">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
           <div className="w-full md:w-[300px] flex flex-col items-center gap-6">
@@ -100,8 +101,8 @@ export default function MoviePage() {
           </div>
 
           <div className="flex-1 flex flex-col gap-4">
-            <h1 className="text-4xl font-bold">{movie.title}</h1>
-            <div className="grid grid-cols-2 gap-3 text-lg mt-4">
+            <h1 className="text-4xl font-bold !mb-2">{movie.title}</h1>
+            <div className="grid grid-cols-2 gap-3 text-lg">
               <div className="text-gray-300">Вікові обмеження:</div>
               <div>{movie.ageRestriction} (Попередньо)</div>
 
@@ -155,7 +156,7 @@ export default function MoviePage() {
           </div>
         </div>
 
-        <div className="!p-4 !border border-green-700 rounded-md bg-zinc-900 h-fit flex-1 min-w-[200px] max-w-[300px]">
+        <div className="!p-4 !border !border-green-700 rounded-md bg-zinc-900 h-fit flex-1 min-w-[200px] max-w-[300px]">
           <Select
             onChange={(selectedOption) =>
               setSelectedDate(selectedOption?.value || "")
@@ -191,9 +192,22 @@ export default function MoviePage() {
                 <div
                   key={index}
                   className="bg-zinc-800 hover:bg-zinc-700 !p-3 rounded shadow text-sm cursor-pointer w-fit"
+                  onClick={() =>
+                    navigateToBuyTicket(
+                      navigate,
+                      movie.id,
+                      session.hallNumber,
+                      selectedDate,
+                      session.time,
+                      session.price,
+                      movie.duration
+                    )
+                  }
                 >
                   <p className="font-medium">{session.time}</p>
-                  <p className="text-gray-400 text-xs">Hall {session.hall}</p>
+                  <p className="text-gray-400 text-xs">
+                    Hall {session.hallNumber}
+                  </p>
                   <p className="text-green-400">{session.price} ₴</p>
                 </div>
               ))}
