@@ -100,54 +100,56 @@ export default function Cart() {
       });
   }, [movieId]);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.id || null;
+  
   const handlePayment = async (e) => {
     e.stopPropagation();
     if (!token) {
       setIsModalWindowAccountOpen(true);
       return;
-    } else {
-      const storedSeats =
-        JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
-      const storedTotalPrice = sessionStorage.getItem("totalPrice") || 0;
-
-      try {
-        // const response = await fetch("http://localhost:5050/api/payment", {
-        const response = await fetch("http://localhost:5000/api/payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            amount: storedTotalPrice * 100,
-            redirectUrl: "http://localhost:5173/",
-            name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
-            qty: storedSeats.length,
-            sum: price * 100,
-            icon: movie.poster,
-            userId: 1746520854579,
-            movieId,
-            date,
-            time,
-            hall,
-            seats: storedSeats,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          sessionStorage.removeItem("chosenSeats");
-          sessionStorage.removeItem("totalPrice");
-          window.location.href = data.pageUrl;
-        } else {
-          console.error("Payment error:", data);
-          alert("Помилка під час створення рахунку");
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-        alert("Щось пішло не так");
+    }
+  
+    const storedSeats =
+      JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
+    const storedTotalPrice = sessionStorage.getItem("totalPrice") || 0;
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: storedTotalPrice * 100,
+          redirectUrl: "http://localhost:5173/",
+          name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
+          qty: storedSeats.length,
+          sum: price * 100,
+          icon: movie.poster,
+          userId,
+          movieId,
+          date,
+          time,
+          hall,
+          seats: storedSeats,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        sessionStorage.removeItem("chosenSeats");
+        sessionStorage.removeItem("totalPrice");
+        window.location.href = data.pageUrl;
+      } else {
+        console.error("Payment error:", data);
+        alert("Помилка під час створення рахунку");
       }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      alert("Щось пішло не так");
     }
   };
-
+  
   return (
     <div className="text-white !px-3 sm:!px-6 !pb-12">
       <div className="flex gap-20">
