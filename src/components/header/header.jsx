@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useModalSearch } from "../../context/modal-search-context";
 import Logo from "../logo/logo";
 import { useModalAccount } from "../../context/modal-account-context";
 import CustomInput from "../custom-input/custom-input";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const {
@@ -16,6 +16,13 @@ export default function Header() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
+  let user = {};
+  try {
+    user = JSON.parse(localStorage.getItem("user") || "{}");
+  } catch (e) {
+    user = {};
+  }
+  
   const isBlurred = isModalWindowSearchOpen
     ? "blur-sm pointer-events-none"
     : "";
@@ -26,6 +33,7 @@ export default function Header() {
     { to: "/schedule", label: "Schedule" },
     { to: "/movies-list", label: "Movies List" },
     { to: "/privacy", label: "Privacy" },
+    { to: "/admin", label: "Admin" },
   ];
 
   const openModalWindowAccount = (e) => {
