@@ -1,5 +1,3 @@
-// src/components/carousel/cinema-carousel.jsx
-
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
@@ -17,19 +15,35 @@ export default function CinemaCarousel() {
           showArrows={true}
         >
           <div>
-            <img src="/assets/images/cin1.jpg" alt="Cinema 1" className="object-cover w-full h-80" />
-          </div>
-         
-          <div>
-            <img src="/assets/images/cin3.jpg" alt="Cinema 3" className="object-cover w-full h-80" />
-          </div>
-
-          <div>
-            <img src="/assets/images/cin2.jpg" alt="Cinema 2" className="object-cover w-full h-80" />
+            <img
+              src="/assets/images/cin1.jpg"
+              alt="Cinema 1"
+              className="object-cover w-full h-80"
+            />
           </div>
 
           <div>
-            <img src="/assets/images/cin4.jpg" alt="Cinema 4" className="object-cover w-full h-80" />
+            <img
+              src="/assets/images/cin3.jpg"
+              alt="Cinema 3"
+              className="object-cover w-full h-80"
+            />
+          </div>
+
+          <div>
+            <img
+              src="/assets/images/cin2.jpg"
+              alt="Cinema 2"
+              className="object-cover w-full h-80"
+            />
+          </div>
+
+          <div>
+            <img
+              src="/assets/images/cin4.jpg"
+              alt="Cinema 4"
+              className="object-cover w-full h-80"
+            />
           </div>
         </Carousel>
       </div>
