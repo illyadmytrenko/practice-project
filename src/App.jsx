@@ -9,16 +9,21 @@ import AppProvider from "./context/app-provider";
 import PersonalAccount from "./pages/personal-account/page";
 import Privacy from "./pages/privacy/page";
 import About from "./pages/about/page";
+import AdminPage from "./pages/admin/page";
 import { useModalAccount } from "./context/modal-account-context";
 import Cart from "./pages/cart/page";
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children, isAdmin = false }) {
   const token = localStorage.getItem("token");
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
   const { setIsModalWindowAccountOpen } = useModalAccount();
 
   if (!token) {
     setIsModalWindowAccountOpen(true);
+    return <Navigate to="/" replace />;
+  }
+  if (isAdmin && userData.role !== "admin") {
     return <Navigate to="/" replace />;
   }
 
@@ -46,6 +51,14 @@ export default function App() {
                   <PersonalAccount />
                 </ProtectedRoute>
               }
+            />
+            <Route
+                path="admin"
+                element={
+                  <ProtectedRoute isAdmin>
+                    <AdminPage />
+                  </ProtectedRoute>
+                }
             />
           </Route>
         </Routes>

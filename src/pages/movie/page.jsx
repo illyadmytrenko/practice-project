@@ -7,22 +7,70 @@ import { selectStyles } from "../../constants/select-styles";
 import { getNextDays } from "../../functions/get-next-days";
 import { toMinutes } from "../../functions/to-minutes";
 import { navigateToBuyTicket } from "../../functions/navigate-to-buy-ticket";
+import { useSchedule } from "../../context/schedule-context";
+import MoviePosterWithoutInfo from "../../components/movie-poster-without-info/movie-poster-without-info";
+import { goToMovie } from "../../functions/go-to-movie";
 
 export default function MoviePage() {
   const { id } = useParams();
+
   const [movie, setMovie] = useState(null);
-  const [recommendedMovies, setRecommendedMovies] = useState([]);
 
   const todayDate = useMemo(() => new Date().toISOString().split("T")[0], []);
-
-  const [schedule, setSchedule] = useState([]);
   const [selectedDate, setSelectedDate] = useState(todayDate);
 
   const { movies } = useMovies();
+  const { schedule } = useSchedule();
+
   const navigate = useNavigate();
 
-  const goToMovie = (movieId, movieTitle) => {
-    navigate(`/movie/${movieId}/${movieTitle}`);
+  const recommendedMovies = useMemo(() => {
+    if (!movie) return;
+
+    const movieGenres = movie.genre.map((g) => g.toLowerCase());
+    return movies
+      .filter((m) => {
+        if (m.id === movie.id) return false;
+        const mGenres = m.genre.map((g) => g.toLowerCase());
+        return mGenres.some((g) => movieGenres.includes(g));
+      })
+      .slice(0, 4);
+  }, [movie, movies]);
+
+  console.log(recommendedMovies);
+
+  const options = getNextDays().map((date) => ({
+    value: date,
+    label: new Date(date).toLocaleDateString("uk-UA", {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+    }),
+  }));
+
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const filteredSessions = useMemo(() => {
+    if (!movie) return [];
+    return schedule.flatMap((hall) =>
+      hall.schedule
+        .filter(
+          (session) =>
+            session.dates.includes(selectedDate) &&
+            session.movieId === movie.id &&
+            (selectedDate !== todayDate ||
+              toMinutes(session.time) > currentMinutes)
+        )
+        .map((session) => ({
+          ...session,
+          hallNumber: hall.hall,
+        }))
+    );
+  }, [schedule, selectedDate, todayDate, currentMinutes, movie]);
+
+  const handleDateChange = (option) => {
+    setSelectedDate(option?.value || "");
   };
 
   useEffect(() => {
@@ -37,28 +85,6 @@ export default function MoviePage() {
       });
   }, [id]);
 
-  useEffect(() => {
-    if (!movie) return;
-
-    const movieGenres = movie.genre.map((g) => g.toLowerCase());
-
-    const recommended = movies
-      .filter((m) => {
-        if (m.id === movie.id) return false;
-        const mGenres = m.genre.map((g) => g.toLowerCase());
-        return mGenres.some((g) => movieGenres.includes(g));
-      })
-      .slice(0, 4);
-
-    setRecommendedMovies(recommended);
-  }, [movie, movies]);
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/schedule").then((response) => {
-      setSchedule(response.data);
-    });
-  }, []);
-
   if (!movie) {
     return (
       <div className="text-white text-center py-10 text-xl">
@@ -67,22 +93,10 @@ export default function MoviePage() {
     );
   }
 
-  const options = getNextDays().map((date) => ({
-    value: date,
-    label: new Date(date).toLocaleDateString("uk-UA", {
-      weekday: "short",
-      day: "2-digit",
-      month: "short",
-    }),
-  }));
-
-  const now = new Date();
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
   return (
-    <div className="text-white !px-3 sm:!px-6 !pb-12 flex flex-col gap-6">
+    <div className="text-white !px-3 !sm:px-6 !pb-12 flex flex-col gap-6">
       <div className="flex flex-col-reverse lg:flex-row justify-between gap-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+        <div className="max-w-6xl !mx-auto flex flex-col md:flex-row gap-10">
           <div className="w-full md:w-[300px] flex flex-col items-center gap-6">
             <img
               src={movie.poster}
@@ -94,54 +108,52 @@ export default function MoviePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-gray-600/50 hover:bg-green-800/70 text-white text-xl font-semibold text-center transition rounded
-                  px-6 min-h-[40px] box-border flex items-center justify-center gap-2 "
+                  px-6 min-h-[40px] flex items-center justify-center gap-2"
             >
-              <span className="text-2xl">►</span> Дивитись трейлер
+              <span className="text-2xl">►</span> Watch Trailer
             </a>
           </div>
 
           <div className="flex-1 flex flex-col gap-4">
-            <h1 className="text-4xl font-bold !mb-2">{movie.title}</h1>
+            <h1 className="text-4xl font-bold mb-2">{movie.title}</h1>
             <div className="grid grid-cols-2 gap-3 text-lg">
-              <div className="text-gray-300">Вікові обмеження:</div>
-              <div>{movie.ageRestriction} (Попередньо)</div>
+              <p className="text-gray-300">Age Restriction:</p>
+              <p>{movie.ageRestriction} (Preliminary)</p>
 
-              <div className="text-gray-300">Рік:</div>
-              <div>{movie.year}</div>
+              <p className="text-gray-300">Year:</p>
+              <p>{movie.year}</p>
 
-              <div className="text-gray-300">Оригінальна назва:</div>
-              <div>{movie.originalTitle}</div>
+              <p className="text-gray-300">Director:</p>
+              <p>{movie.director}</p>
 
-              <div className="text-gray-300">Режисер:</div>
-              <div>{movie.director}</div>
+              <p className="text-gray-300">Language:</p>
+              <p>Ukrainian</p>
 
-              <div className="text-gray-300">Мова:</div>
-              <div>Українська мова</div>
+              <p className="text-gray-300">Genre:</p>
+              <p>{movie.genre?.join(", ")}</p>
 
-              <div className="text-gray-300">Жанр:</div>
-              <div>{movie.genre?.join(", ")}</div>
-
-              <div className="text-gray-300">Тривалість:</div>
-              <div>
+              <p className="text-gray-300">Duration:</p>
+              <p>
                 {Math.floor(movie.duration / 60)}:{movie.duration % 60}
-              </div>
+              </p>
 
-              <div className="text-gray-300">Виробництво:</div>
-              <div>
+              <p className="text-gray-300">Country:</p>
+              <p>
                 {Array.isArray(movie.country)
                   ? movie.country.join(", ")
                   : movie.country}
-              </div>
+              </p>
 
-              <div className="text-gray-300">Студія:</div>
-              <div>{movie.studio}</div>
+              <p className="text-gray-300">Studio:</p>
+              <p>{movie.studio}</p>
 
-              <div className="text-gray-300">Продюсер:</div>
-              <div>{movie.producer}</div>
+              <p className="text-gray-300">Producer:</p>
+              <p>{movie.producer}</p>
 
-              <div className="text-gray-300">У головних ролях:</div>
-              <div>{movie.cast?.join(", ")}</div>
-              <div className="text-gray-300">Рейтинг глядачів:</div>
+              <p className="text-gray-300">Cast:</p>
+              <p>{movie.cast?.join(", ")}</p>
+
+              <p className="text-gray-300">Viewer Rating:</p>
               <div className="flex items-center gap-2 text-green-600 font-bold">
                 <span>{movie.rating}</span>
                 <svg
@@ -156,14 +168,12 @@ export default function MoviePage() {
           </div>
         </div>
 
-        <div className="!p-4 !border !border-green-700 rounded-md bg-zinc-900 h-fit flex-1 min-w-[200px] max-w-[300px]">
+        <div className="!p-4 border border-green-700 rounded-md bg-zinc-900 h-fit flex-1 min-w-[200px] max-w-[300px]">
           <Select
-            onChange={(selectedOption) =>
-              setSelectedDate(selectedOption?.value || "")
-            }
+            onChange={handleDateChange}
             value={{
               value: selectedDate,
-              label: new Date(selectedDate).toLocaleDateString("uk-UA", {
+              label: new Date(selectedDate).toLocaleDateString("en-GB", {
                 weekday: "short",
                 day: "2-digit",
                 month: "short",
@@ -172,72 +182,49 @@ export default function MoviePage() {
             options={options}
             styles={selectStyles}
             className="text-xl !mb-6"
-          ></Select>
+          />
           <div className="flex flex-wrap gap-3">
-            {schedule
-              .flatMap((hall) =>
-                hall.schedule.map((session) => ({
-                  ...session,
-                  hallNumber: hall.hall,
-                }))
-              )
-              .filter(
-                (session) =>
-                  session.dates.includes(selectedDate) &&
-                  session.movieId === movie.id &&
-                  (selectedDate !== todayDate ||
-                    toMinutes(session.time) > currentMinutes)
-              )
-              .map((session, index) => (
-                <div
-                  key={index}
-                  className="bg-zinc-800 hover:bg-zinc-700 !p-3 rounded shadow text-sm cursor-pointer w-fit"
-                  onClick={() =>
-                    navigateToBuyTicket(
-                      navigate,
-                      movie.id,
-                      session.hallNumber,
-                      selectedDate,
-                      session.time,
-                      session.price,
-                      movie.duration
-                    )
-                  }
-                >
-                  <p className="font-medium">{session.time}</p>
-                  <p className="text-gray-400 text-xs">
-                    Hall {session.hallNumber}
-                  </p>
-                  <p className="text-green-400">{session.price} ₴</p>
-                </div>
-              ))}
+            {filteredSessions.map((session, index) => (
+              <div
+                key={index}
+                className="bg-zinc-800 hover:bg-zinc-700 !p-3 rounded shadow text-sm cursor-pointer w-fit"
+                onClick={() =>
+                  navigateToBuyTicket(
+                    navigate,
+                    movie.id,
+                    session.hallNumber,
+                    selectedDate,
+                    session.time,
+                    session.price,
+                    movie.duration
+                  )
+                }
+              >
+                <p className="font-medium">{session.time}</p>
+                <p className="text-gray-400 text-xs">
+                  Hall {session.hallNumber}
+                </p>
+                <p className="text-green-400">{session.price} ₴</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold !mb-2">Опис</h2>
+      <div className="max-w-6xl">
+        <h2 className="text-2xl font-bold !mb-2">Description</h2>
         <p className="text-lg leading-relaxed">{movie.description}</p>
       </div>
 
-      <div className="w-full !mx-auto flex flex-col gap-6">
-        <h2 className="text-2xl font-bold">Дивіться також:</h2>
+      <div className="w-full mx-auto flex flex-col gap-6">
+        <h2 className="text-2xl font-bold">You may also like:</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {recommendedMovies.map((recMovie) => (
-            <div
+            <MoviePosterWithoutInfo
+              movie={recMovie}
+              goToMovie={goToMovie}
               key={recMovie.id}
-              onClick={() => goToMovie(recMovie.id, recMovie.title)}
-              className="cursor-pointer flex flex-col items-center hover:scale-105 transition-transform p-2"
-            >
-              <img
-                src={recMovie.poster}
-                alt={recMovie.title}
-                className="w-full h-[400px] object-cover rounded-xl shadow-md"
-              />
-              <p className="!mt-2 text-center text-lg font-semibold text-white">
-                {recMovie.title}
-              </p>
-            </div>
+            />
           ))}
         </div>
       </div>

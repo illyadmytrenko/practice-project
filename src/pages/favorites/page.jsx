@@ -3,6 +3,7 @@ import { useLikedMovies } from "../../context/liked-movies-context";
 
 export default function Favorites() {
   const { likedMovies } = useLikedMovies();
+
   return (
     <div className="!px-3 sm:!px-6 !pb-12">
       <h1 className="text-4xl font-bold text-white !mb-10">

@@ -2,35 +2,51 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { format } from "date-fns";
-import { uk } from "date-fns/locale";
+import { enGB } from "date-fns/locale";
 import { useModalAccount } from "../../context/modal-account-context";
+import { useSchedule } from "../../context/schedule-context";
 
 export default function Cart() {
   const { state } = useLocation();
-  const [schedule, setSchedule] = useState([]);
+  const { movieId, hall, date, time, price, duration } = state;
 
-  useEffect(() => {
-    // axios.get("http://localhost:5050/api/schedule").then((response) => {
-    axios.get("http://localhost:5000/api/schedule").then((response) => {
-      setSchedule(response.data);
-    });
-  }, []);
+  const { schedule } = useSchedule();
 
   const [chosenSeats, setChosenSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const { isModalWindowAccountOpen, setIsModalWindowAccountOpen } =
-    useModalAccount();
+  const { setIsModalWindowAccountOpen } = useModalAccount();
   const token = localStorage.getItem("token");
 
-  console.log(isModalWindowAccountOpen);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.id || null;
+
+  const formattedDate = format(new Date(date), "eeee, dd MMMM yyyy", {
+    locale: enGB,
+  });
+
+  const [hours, minutes] = time.split(":").map(Number);
+  const startDateTime = new Date(date);
+  startDateTime.setHours(hours, minutes);
+
+  const endDateTime = new Date(startDateTime.getTime() + duration * 60000);
+
+  const formattedStartTime = format(startDateTime, "HH:mm");
+  const formattedEndTime = format(endDateTime, "HH:mm");
+
+  const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    if (chosenSeats.length > 0) {
-      sessionStorage.setItem("chosenSeats", JSON.stringify(chosenSeats));
-      sessionStorage.setItem("totalPrice", totalPrice);
-    }
-  }, [chosenSeats, totalPrice]);
+    axios
+      // .get(`http://localhost:5050/api/movies/${movieId}`)
+      .get(`http://localhost:5000/api/movies/${movieId}`)
+      .then((response) => {
+        setMovie(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при загрузке фильмов:", error);
+      });
+  }, [movieId]);
 
   const handleChooseSeat = (seat) => {
     const exists = chosenSeats.some(
@@ -47,6 +63,58 @@ export default function Cart() {
       setTotalPrice((totalPrice) => totalPrice + price);
     }
   };
+
+  const handlePayment = async (e) => {
+    e.stopPropagation();
+    if (!token) {
+      setIsModalWindowAccountOpen(true);
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:5000/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: storedTotalPrice * 100,
+          redirectUrl: "http://localhost:5173/",
+          name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
+          qty: storedSeats.length,
+          sum: price * 100,
+          icon: movie.poster,
+          userId,
+          movieId,
+          date,
+          time,
+          hall,
+          seats: storedSeats,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        sessionStorage.removeItem("chosenSeats");
+        sessionStorage.removeItem("totalPrice");
+        window.location.href = data.pageUrl;
+      } else {
+        console.error("Payment error:", data);
+        alert("Помилка під час створення рахунку");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      alert("Щось пішло не так");
+    }
+  };
+
+  const storedSeats = JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
+  const storedTotalPrice = sessionStorage.getItem("totalPrice") || 0;
+
+  useEffect(() => {
+    if (chosenSeats.length > 0) {
+      sessionStorage.setItem("chosenSeats", JSON.stringify(chosenSeats));
+      sessionStorage.setItem("totalPrice", totalPrice);
+    }
+  }, [chosenSeats, totalPrice]);
 
   if (!state) {
     return (
@@ -69,87 +137,6 @@ export default function Cart() {
     );
   }
 
-  const { movieId, hall, date, time, price, duration } = state;
-
-  const formattedDate = format(new Date(date), "eeee, dd MMMM yyyy", {
-    locale: uk,
-  });
-
-  const [hours, minutes] = time.split(":").map(Number);
-  const startDateTime = new Date(date);
-  startDateTime.setHours(hours, minutes);
-
-  const endDateTime = new Date(startDateTime.getTime() + duration * 60000);
-
-  const formattedStartTime = format(startDateTime, "HH:mm");
-  const formattedEndTime = format(endDateTime, "HH:mm");
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [movie, setMovie] = useState({});
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    axios
-      // .get(`http://localhost:5050/api/movies/${movieId}`)
-      .get(`http://localhost:5000/api/movies/${movieId}`)
-      .then((response) => {
-        setMovie(response.data);
-      })
-      .catch((error) => {
-        console.error("Ошибка при загрузке фильмов:", error);
-      });
-  }, [movieId]);
-
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user?.id || null;
-  
-  const handlePayment = async (e) => {
-    e.stopPropagation();
-    if (!token) {
-      setIsModalWindowAccountOpen(true);
-      return;
-    }
-  
-    const storedSeats =
-      JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
-    const storedTotalPrice = sessionStorage.getItem("totalPrice") || 0;
-  
-    try {
-      const response = await fetch("http://localhost:5000/api/payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: storedTotalPrice * 100,
-          redirectUrl: "http://localhost:5173/",
-          name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
-          qty: storedSeats.length,
-          sum: price * 100,
-          icon: movie.poster,
-          userId,
-          movieId,
-          date,
-          time,
-          hall,
-          seats: storedSeats,
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        sessionStorage.removeItem("chosenSeats");
-        sessionStorage.removeItem("totalPrice");
-        window.location.href = data.pageUrl;
-      } else {
-        console.error("Payment error:", data);
-        alert("Помилка під час створення рахунку");
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-      alert("Щось пішло не так");
-    }
-  };
-  
   return (
     <div className="text-white !px-3 sm:!px-6 !pb-12">
       <div className="flex gap-20">
@@ -169,7 +156,7 @@ export default function Cart() {
                   className="w-20 !p-4"
                 />
               </div>
-              <p className="!p-4">Зал №{hall}</p>
+              <p className="!p-4">Hall №{hall}</p>
             </div>
             <div className="text-lg bg-green-700 flex items-center">
               <div className="bg-zinc-500">
@@ -192,7 +179,7 @@ export default function Cart() {
                 />
               </div>
               <p className="!p-4">
-                Час: {formattedStartTime} - {formattedEndTime}
+                Time: {formattedStartTime} - {formattedEndTime}
               </p>
             </div>
             <div className="text-lg bg-green-700 flex items-center">
@@ -203,13 +190,13 @@ export default function Cart() {
                   className="w-20 !p-3"
                 />
               </div>
-              <p className="!p-4">Ціна: {price} ₴</p>
+              <p className="!p-4">Price: {price} ₴</p>
             </div>
           </div>
           <div className="flex gap-10">
             <div className="flex flex-1 flex-col gap-2 max-w-[600px]">
               <h2 className="text-3xl font-bold text-center !mb-8 !mt-2">
-                Екран
+                Screen
               </h2>
               {schedule.find((h) => h.hall === Number(hall))?.rows &&
                 Array.from({
@@ -226,7 +213,8 @@ export default function Cart() {
                           s.seats.some(
                             (occupiedSeat) =>
                               occupiedSeat.row === rowIndex + 1 &&
-                              occupiedSeat.seat === seatIndex + 1
+                              occupiedSeat.seat === seatIndex + 1 &&
+                              occupiedSeat.date === date
                           )
                         );
                       return (
@@ -262,42 +250,40 @@ export default function Cart() {
                 ))}
             </div>
             <div className="!border !border-green-700 rounded-md bg-zinc-900 bg-zinc-900 text-white !p-6 rounded-xl shadow-lg h-fit">
-              <h2 className="text-2xl font-semibold !mb-4">Ваше замовлення</h2>
+              <h2 className="text-2xl font-semibold !mb-4">Your order</h2>
               <div className="text-lg flex flex-col gap-3">
                 <div>
-                  <p className="text-gray-400">Фільм</p>
-                  <p className="text-base font-medium">
-                    {movie?.title || "Назва фільму"}
-                  </p>
+                  <p className="text-gray-400">Movie</p>
+                  <p className="text-base font-medium">{movie.title}</p>
                 </div>
                 <div>
-                  <p className="text-gray-400">Дата та час</p>
+                  <p className="text-gray-400">Date & Time</p>
                   <p className="text-base font-medium">
                     {formattedDate}, {formattedStartTime}–{formattedEndTime}
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-400">Зал</p>
+                  <p className="text-gray-400">Hall</p>
                   <p className="text-base font-medium">№{hall}</p>
                 </div>
                 <div>
-                  <p className="text-gray-400">Місця</p>
+                  <p className="text-gray-400">Seats</p>
                   {chosenSeats.length > 0 ? (
                     <ul className="font-semibold">
                       {chosenSeats.map((seat, idx) => (
                         <li key={idx}>
-                          {seat.row} Ряд, {seat.seat} Місце
+                          Row {seat.row}, Seat {seat.seat}
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-gray-500 italic">Місця не вибрані</p>
+                    <p className="text-gray-500 italic">Seats not selected</p>
                   )}
                 </div>
               </div>
               <div className="!border-t !border-gray-700 !pt-2 !mt-2">
                 <div className="flex justify-between text-lg font-semibold">
-                  <span>Всього:</span>
+                  <span>Total:</span>
                   <span>{totalPrice} ₴</span>
                 </div>
                 <button
@@ -305,7 +291,7 @@ export default function Cart() {
                   disabled={chosenSeats.length === 0}
                   onClick={handlePayment}
                 >
-                  Перейти до оплати
+                  Proceed to payment
                 </button>
               </div>
             </div>
