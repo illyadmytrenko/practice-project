@@ -1,56 +1,54 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useMovies } from "../../context/movies-context";
 import MoviePoster from "../../components/movie-poster/movie-poster";
-import { useMemo } from "react";
 import { getNextDays } from "../../functions/get-next-days";
 import { toMinutes } from "../../functions/to-minutes";
 import { navigateToBuyTicket } from "../../functions/navigate-to-buy-ticket";
 import { useNavigate } from "react-router-dom";
+import { useSchedule } from "../../context/schedule-context";
 
 export default function Schedule() {
   const todayDate = useMemo(() => new Date().toISOString().split("T")[0], []);
-
-  const [schedule, setSchedule] = useState([]);
   const [selectedDate, setSelectedDate] = useState(todayDate);
-  const { movies } = useMovies();
 
-  const now = new Date();
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const { movies } = useMovies();
+  const { schedule } = useSchedule();
 
   const navigate = useNavigate();
 
-  const getUpcomingSessions = (movieId) => {
-    return schedule
-      .flatMap((hall) =>
-        hall.schedule
-          .filter(
-            (session) =>
-              session.movieId === movieId &&
-              session.dates.includes(selectedDate) &&
-              (selectedDate !== todayDate ||
-                toMinutes(session.time) > currentMinutes)
-          )
-          .map((session) => ({ ...session, hall: hall.hall }))
-      )
-      .sort((a, b) => toMinutes(a.time) - toMinutes(b.time));
-  };
-
-  const sortedMovies = movies
-    .map((movie) => {
-      const sessions = getUpcomingSessions(movie.id);
-      return { movie, sessions };
-    })
-    .filter((entry) => entry.sessions.length > 0)
-    .sort(
-      (a, b) => toMinutes(a.sessions[0].time) - toMinutes(b.sessions[0].time)
-    );
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/schedule").then((response) => {
-      setSchedule(response.data);
-    });
+  const currentMinutes = useMemo(() => {
+    const now = new Date();
+    return now.getHours() * 60 + now.getMinutes();
   }, []);
+
+  const getUpcomingSessions = useMemo(() => {
+    return (movieId) =>
+      schedule
+        .flatMap((hall) =>
+          hall.schedule
+            .filter(
+              (session) =>
+                session.movieId === movieId &&
+                session.dates.includes(selectedDate) &&
+                (selectedDate !== todayDate ||
+                  toMinutes(session.time) > currentMinutes)
+            )
+            .map((session) => ({ ...session, hall: hall.hall }))
+        )
+        .sort((a, b) => toMinutes(a.time) - toMinutes(b.time));
+  }, [schedule, selectedDate, todayDate, currentMinutes]);
+
+  const sortedMovies = useMemo(() => {
+    return movies
+      .map((movie) => {
+        const sessions = getUpcomingSessions(movie.id);
+        return { movie, sessions };
+      })
+      .filter((entry) => entry.sessions.length > 0)
+      .sort(
+        (a, b) => toMinutes(a.sessions[0].time) - toMinutes(b.sessions[0].time)
+      );
+  }, [movies, getUpcomingSessions]);
 
   return (
     <div className="text-white !px-3 sm:!px-6 !pb-12 max-h-[200vh] overflow-auto">
@@ -65,7 +63,7 @@ export default function Schedule() {
                 : "bg-zinc-800 hover:bg-zinc-700"
             }`}
           >
-            {new Date(date).toLocaleDateString("uk-UA", {
+            {new Date(date).toLocaleDateString("en-GB", {
               weekday: "short",
               day: "2-digit",
               month: "short",

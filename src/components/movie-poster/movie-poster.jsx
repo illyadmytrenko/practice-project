@@ -1,6 +1,24 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLikedMovies } from "../../context/liked-movies-context";
+
+function ActionButton({ onClick, icon, text, rotateIcon = false }) {
+  return (
+    <div
+      className="flex gap-2 items-center cursor-pointer group"
+      onClick={onClick}
+    >
+      <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
+        <img
+          src={icon}
+          alt="icon"
+          className={`h-10 w-auto ${rotateIcon ? "transform rotate-180" : ""}`}
+        />
+      </div>
+      <span>{text}</span>
+    </div>
+  );
+}
 
 export default function MoviePoster({
   movie,
@@ -12,13 +30,16 @@ export default function MoviePoster({
 
   const navigate = useNavigate();
 
-  const viewMoreDetails = (id, title) => {
-    navigate(`/movie/${id}/${title}`);
-  };
+  const viewMoreDetails = useCallback(
+    (id, title) => {
+      navigate(`/movie/${id}/${title}`);
+    },
+    [navigate]
+  );
 
-  const viewTrailer = (url) => {
+  const viewTrailer = useCallback((url) => {
     window.open(url, "_blank", "noopener,noreferrer");
-  };
+  }, []);
 
   const { toggleLike, isLiked } = useLikedMovies();
 
@@ -52,51 +73,24 @@ export default function MoviePoster({
       )}
       {isHovered && (
         <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 w-[90%] text-white text-xl font-semibold flex flex-col gap-10 z-20">
-          <div
-            className="flex gap-2 items-center cursor-pointer group"
+          <ActionButton
             onClick={() => viewMoreDetails(movie.id, movie.title)}
-          >
-            <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
-              <img
-                src="./assets/icons/information-icon-white.png"
-                alt="info icon"
-                className="h-10 w-auto"
-              />
-            </div>
-            <span>Детальніше про фільм</span>
-          </div>
-          <div
-            className="flex gap-2 items-center cursor-pointer group"
+            icon="./assets/icons/information-icon-white.png"
+            text="More about the movie"
+          />
+          <ActionButton
             onClick={() => viewTrailer(movie.trailer)}
-          >
-            <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
-              <img
-                src="./assets/icons/white-play-icon.png"
-                alt="play icon"
-                className="h-10 w-auto"
-              />
-            </div>
-            <span>Дивитися трейлер</span>
-          </div>
-          <div
-            className="flex gap-2 items-center cursor-pointer group"
+            icon="./assets/icons/white-play-icon.png"
+            text="Watch trailer"
+          />
+          <ActionButton
             onClick={() => toggleLike(movie)}
-          >
-            <div className="bg-white/30 backdrop-blur-md h-14 w-16 flex items-center justify-center group-hover:bg-red-500 transition-colors rounded-md">
-              <img
-                src="./assets/icons/like.png"
-                alt="like icon"
-                className={`h-10 w-auto ${
-                  isLiked(movie.id) ? "transform rotate-180" : ""
-                }`}
-              />
-            </div>
-            <span>
-              {isLiked(movie.id)
-                ? "Видалити з улюблених"
-                : "Додати до улюблених"}
-            </span>
-          </div>
+            icon="./assets/icons/like.png"
+            text={
+              isLiked(movie.id) ? "Add to favorites" : "Remove from favorites"
+            }
+            rotateIcon={isLiked(movie.id)}
+          />
         </div>
       )}
     </div>

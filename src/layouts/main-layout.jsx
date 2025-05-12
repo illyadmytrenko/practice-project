@@ -8,8 +8,11 @@ import { useModalAccount } from "../context/modal-account-context";
 import ModalAccount from "../components/modal-account/modal-account";
 
 export default function MainLayout() {
-  const { isModalWindowSearchOpen, setIsModalWindowSearchOpen } =
-    useModalSearch();
+  const {
+    isModalWindowSearchOpen,
+    setIsModalWindowSearchOpen,
+    setSearchString,
+  } = useModalSearch();
   const { isModalWindowAccountOpen, setIsModalWindowAccountOpen } =
     useModalAccount();
 
@@ -22,6 +25,7 @@ export default function MainLayout() {
         onClick={() => {
           setIsModalWindowSearchOpen(false);
           setIsModalWindowAccountOpen(false);
+          setSearchString("");
         }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(at_bottom_left,_rgba(34,197,94,0.4),_transparent_50%)]"></div>

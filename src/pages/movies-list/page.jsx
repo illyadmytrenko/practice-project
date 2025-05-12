@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import MoviePoster from "../../components/movie-poster/movie-poster";
 import { useMovies } from "../../context/movies-context";
 import Select from "react-select";
@@ -7,8 +7,11 @@ import CustomInput from "../../components/custom-input/custom-input";
 import { selectStyles } from "../../constants/select-styles";
 
 export default function MoviesList() {
+  const animatedComponents = makeAnimated();
+
   const { movies } = useMovies();
   const [shownMovies, setShownMovies] = useState([]);
+
   const [filters, setFilters] = useState({
     searchTerm: "",
     genres: [],
@@ -18,20 +21,18 @@ export default function MoviesList() {
     sortOption: "",
   });
 
-  const allGenres = [...new Set(movies.flatMap((movie) => movie.genre))];
-  const allYears = [...new Set(movies.map((movie) => movie.year))].sort(
-    (a, b) => b - a
+  const allGenres = useMemo(
+    () => [...new Set(movies.flatMap((movie) => movie.genre))],
+    [movies]
   );
-  const allAgeRestrictions = [
-    ...new Set(movies.flatMap((movie) => movie.ageRestriction)),
-  ].sort((a, b) => {
-    const numA = parseInt(a, 10);
-    const numB = parseInt(b, 10);
-    return numA - numB;
-  });
-
-  useEffect(() => {
-    setShownMovies(movies);
+  const allYears = useMemo(
+    () => [...new Set(movies.map((movie) => movie.year))].sort((a, b) => b - a),
+    [movies]
+  );
+  const allAgeRestrictions = useMemo(() => {
+    return [...new Set(movies.map((m) => m.ageRestriction))].sort((a, b) => {
+      return parseInt(a, 10) - parseInt(b, 10);
+    });
   }, [movies]);
 
   const handleFilterChange = (key, value) => {
@@ -40,6 +41,7 @@ export default function MoviesList() {
 
   const resetFilters = () => {
     setFilters({
+      searchTerm: "",
       genres: [],
       years: [],
       minRating: "",
@@ -49,52 +51,50 @@ export default function MoviesList() {
   };
 
   useEffect(() => {
-    setShownMovies(
-      movies
-        .filter((movie) =>
-          filters.searchTerm
-            ? movie.title
-                .toLowerCase()
-                .includes(filters.searchTerm.toLowerCase()) ||
-              movie.originalTitle
-                .toLowerCase()
-                .includes(filters.searchTerm.toLowerCase())
-            : true
-        )
-        .filter((movie) =>
-          filters.genres.length > 0
-            ? movie.genre.some((g) => filters.genres.includes(g))
-            : true
-        )
-        .filter((movie) =>
-          filters.years.length > 0 ? filters.years.includes(movie.year) : true
-        )
-        .filter((movie) =>
-          filters.minRating ? movie.rating >= +filters.minRating : true
-        )
-        .filter((movie) =>
-          filters.ageRestrictions.length > 0
-            ? filters.ageRestrictions.includes(movie.ageRestriction)
-            : true
-        )
-        .sort((a, b) => {
-          switch (filters.sortOption) {
-            case "rating-desc":
-              return b.rating - a.rating;
-            case "rating-asc":
-              return a.rating - b.rating;
-            case "title-asc":
-              return a.title.localeCompare(b.title);
-            case "title-desc":
-              return b.title.localeCompare(a.title);
-            default:
-              return 0;
-          }
-        })
-    );
+    const filtered = movies
+      .filter((movie) => {
+        const term = filters.searchTerm.toLowerCase();
+        return term
+          ? movie.title.toLowerCase().includes(term) ||
+              movie.originalTitle.toLowerCase().includes(term)
+          : true;
+      })
+      .filter((movie) =>
+        filters.genres.length
+          ? movie.genre.some((g) => filters.genres.includes(g))
+          : true
+      )
+      .filter((movie) =>
+        filters.years.length ? filters.years.includes(movie.year) : true
+      )
+      .filter((movie) =>
+        filters.minRating ? movie.rating >= +filters.minRating : true
+      )
+      .filter((movie) =>
+        filters.ageRestrictions.length
+          ? filters.ageRestrictions.includes(movie.ageRestriction)
+          : true
+      )
+      .sort((a, b) => {
+        switch (filters.sortOption) {
+          case "rating-desc":
+            return b.rating - a.rating;
+          case "rating-asc":
+            return a.rating - b.rating;
+          case "title-asc":
+            return a.title.localeCompare(b.title);
+          case "title-desc":
+            return b.title.localeCompare(a.title);
+          default:
+            return 0;
+        }
+      });
+
+    setShownMovies(filtered);
   }, [movies, filters]);
 
-  const animatedComponents = makeAnimated();
+  const createOptions = (arr) =>
+    arr.map((item) => ({ value: item, label: item }));
 
   return (
     <div className="flex flex-col !px-3 sm:!px-6 !pb-12 text-white gap-6 z-50">
@@ -103,38 +103,46 @@ export default function MoviesList() {
         type="text"
         placeholder="Search by title"
         value={filters.searchTerm}
-        onChange={(e) => setFilters({ ...filters, searchTerm: e.target.value })}
+        onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
         className="w-full max-w-xl text-xl text-black"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
         <Select
           isMulti
           placeholder="All genres"
-          options={allGenres.map((g) => ({ value: g, label: g }))}
+          options={createOptions(allGenres)}
+          value={createOptions(allGenres).filter((opt) =>
+            filters.genres.includes(opt.value)
+          )}
           onChange={(e) =>
             handleFilterChange(
               "genres",
-              e.map((option) => option.value)
+              e.map((o) => o.value)
             )
           }
           styles={selectStyles}
           className="text-xl"
           components={animatedComponents}
-        ></Select>
+          noOptionsMessage={() => "No genres"}
+        />
         <Select
           isMulti
           placeholder="All years"
-          options={allYears.map((y) => ({ value: y, label: y }))}
+          options={createOptions(allYears)}
+          value={createOptions(allYears).filter((opt) =>
+            filters.years.includes(opt.value)
+          )}
           onChange={(e) =>
             handleFilterChange(
               "years",
-              e.map((option) => option.value)
+              e.map((o) => o.value)
             )
           }
           styles={selectStyles}
           className="text-xl"
           components={animatedComponents}
-        ></Select>
+          noOptionsMessage={() => "No years"}
+        />
         <Select
           placeholder="Any rating"
           options={[
@@ -143,24 +151,34 @@ export default function MoviesList() {
             { value: "7", label: "7+" },
             { value: "8", label: "8+" },
           ]}
+          value={
+            filters.minRating
+              ? { value: filters.minRating, label: `${filters.minRating}+` }
+              : null
+          }
           onChange={(e) => handleFilterChange("minRating", e.value)}
           styles={selectStyles}
           className="text-xl"
           components={animatedComponents}
-        ></Select>
+          isClearable
+        />
         <Select
           isMulti
           placeholder="Age restriction"
-          options={allAgeRestrictions.map((a) => ({ value: a, label: a }))}
+          options={createOptions(allAgeRestrictions)}
+          value={createOptions(allAgeRestrictions).filter((opt) =>
+            filters.ageRestrictions.includes(opt.value)
+          )}
           onChange={(e) =>
             handleFilterChange(
               "ageRestrictions",
-              e.map((option) => option.value)
+              e.map((o) => o.value)
             )
           }
           styles={selectStyles}
           className="text-xl"
           components={animatedComponents}
+          noOptionsMessage={() => "No age restrictions"}
         />
         <Select
           placeholder="Sort by"
@@ -170,10 +188,24 @@ export default function MoviesList() {
             { value: "title-asc", label: "Title: A-Z" },
             { value: "title-desc", label: "Title: Z-A" },
           ]}
+          value={
+            filters.sortOption
+              ? {
+                  value: filters.sortOption,
+                  label: {
+                    "rating-desc": "Rating: High to Low",
+                    "rating-asc": "Rating: Low to High",
+                    "title-asc": "Title: A-Z",
+                    "title-desc": "Title: Z-A",
+                  }[filters.sortOption],
+                }
+              : null
+          }
           onChange={(e) => handleFilterChange("sortOption", e.value)}
           styles={selectStyles}
           className="text-xl"
           components={animatedComponents}
+          isClearable
         />
         <button
           onClick={resetFilters}
@@ -182,7 +214,7 @@ export default function MoviesList() {
           Clear filters
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 max-h-[200vh] overflow-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 max-h-[200vh] overflow-auto !p-1">
         {shownMovies.length > 0 ? (
           shownMovies.map((movie) => (
             <MoviePoster
