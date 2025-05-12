@@ -10,6 +10,7 @@ import PersonalAccount from "./pages/personal-account/page";
 import Privacy from "./pages/privacy/page";
 import AdminPage from "./pages/admin/page";
 import { useModalAccount } from "./context/modal-account-context";
+import Cart from "./pages/cart/page";
 
 function ProtectedRoute({ children, isAdmin = false }) {
   const token = localStorage.getItem("token");
@@ -35,11 +36,12 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path="movie/:id" element={<Movie />} />
+            <Route path="movie/:id/:title" element={<Movie />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path="schedule" element={<Schedule />} />
+            <Route path="cart" element={<Cart />} />
             <Route path="movies-list" element={<MoviesList />} />
-            <Route path="privacy" element={<Privacy />} />  
+            <Route path="privacy" element={<Privacy />} />
             <Route
               path="profile"
               element={

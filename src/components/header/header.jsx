@@ -8,12 +8,12 @@ export default function Header() {
   const {
     isModalWindowSearchOpen,
     setIsModalWindowSearchOpen,
+    searchString,
     setSearchString,
   } = useModalSearch();
   const { setIsModalWindowAccountOpen } = useModalAccount();
 
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
 
   let user = {};
@@ -22,63 +22,40 @@ export default function Header() {
   } catch (e) {
     user = {};
   }
+  
+  const isBlurred = isModalWindowSearchOpen
+    ? "blur-sm pointer-events-none"
+    : "";
+
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/favorites", label: "Favorites" },
+    { to: "/schedule", label: "Schedule" },
+    { to: "/movies-list", label: "Movies List" },
+    { to: "/privacy", label: "Privacy" },
+    { to: "/admin", label: "Admin" },
+  ];
 
   const openModalWindowAccount = (e) => {
     e.stopPropagation();
-    if (!token) {
-      setIsModalWindowAccountOpen(true);
-    } else {
-      navigate("/profile");
-    }
+    token ? navigate("/profile") : setIsModalWindowAccountOpen(true);
   };
 
   return (
-    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col md:flex-row gap-5 md:gap-[60px] flex-wrap justify-between items-center relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
+    <div className="!p-5 sm:!p-8 text-white z-10 flex flex-col md:flex-row gap-x-5 gap-y-5 md:gap-x-[40px] flex-wrap justify-between items-center relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-black after:to-green-500">
       <Logo />
       <nav
-        className={`!flex flex-wrap justify-center gap-10 text-2xl font-semibold transition duration-300 ${
-          isModalWindowSearchOpen ? "blur-sm pointer-events-none" : ""
-        }`}
+        className={`!flex flex-wrap justify-center gap-10 text-2xl font-semibold transition duration-300 ${isBlurred}`}
       >
-        <Link
-          to={"/"}
-          className="transition-colors duration-300 hover:text-green-400"
-        >
-          Home
-        </Link>
-        <Link
-          to={"/favorites"}
-          className="transition-colors duration-300 hover:text-green-400"
-        >
-          Favorites
-        </Link>
-        <Link
-          to={"/schedule"}
-          className="transition-colors duration-300 hover:text-green-400"
-        >
-          Schedule
-        </Link>{" "}
-        <Link
-          to={"/movies-list"}
-          className="transition-colors duration-300 hover:text-green-400"
-        >
-          Movies List
-        </Link>
-
-        <Link
-          to={"/privacy"}
-          className="transition-colors duration-300 hover:text-green-400"
-        >
-          Privacy
-        </Link>
-        {user.role === "admin" && (
-            <Link
-                to="/admin"
-                className="transition-colors duration-300 hover:text-green-400"
-            >
-              Admin
-            </Link>
-        )}
+        {navLinks.map(({ to, label }) => (
+          <Link
+            key={to}
+            to={to}
+            className="transition-colors duration-300 hover:text-green-400"
+          >
+            {label}
+          </Link>
+        ))}
       </nav>
 
       <div className="relative z-20 flex gap-5 items-center">
@@ -86,19 +63,18 @@ export default function Header() {
           type="text"
           placeholder="Search"
           onChange={(e) => {
-            const value = e.target.value;
+            const value = e.target.value.trim();
             setSearchString(value);
-            setIsModalWindowSearchOpen(value.trim() !== "");
+            setIsModalWindowSearchOpen(!!value);
           }}
+          value={searchString}
           onClick={(e) => e.stopPropagation()}
           className="w-[160px]"
         />
         <button
           type="button"
-          onClick={(e) => openModalWindowAccount(e)}
-          className={`!flex gap-10 text-2xl font-semibold transition duration-300 ${
-            isModalWindowSearchOpen ? "blur-sm pointer-events-none" : ""
-          }`}
+          onClick={openModalWindowAccount}
+          className={`!flex gap-10 text-2xl font-semibold transition duration-300 ${isBlurred}`}
         >
           <img
             src="./assets/icons/account.png"

@@ -1,9 +1,11 @@
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
 export default function BreadcrumbsComponent({ location }) {
-  const locationToShow = location
+  const parts = location.split("/");
+  const lastPart = decodeURIComponent(parts[parts.length - 1]);
+
+  const locationToShow = lastPart
     .replace(/-/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
 
@@ -22,7 +24,7 @@ export default function BreadcrumbsComponent({ location }) {
         to={`${location}`}
         className="text-gray-300 transition-colors duration-300 hover:text-green-400"
       >
-        {locationToShow.charAt(1).toUpperCase() + locationToShow.slice(2)}
+        {locationToShow}
       </Link>
     </Breadcrumbs>
   );

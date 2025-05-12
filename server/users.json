@@ -5,6 +5,17 @@
     "email": "lizapapushina@gmail.com",
     "password": "$2b$10$kHGkLwkuOYy.mQxF6KTMfexA32sVzGI1pQYh8FTbn3OnVmdSMVP0S",
     "role": "user"
+    "tickets": [
+      {
+        "movieId": "3",
+        "date": "2025-05-11",
+        "time": "19:30",
+        "hall": 6,
+        "row": 7,
+        "seat": 5,
+        "price": 130
+      }
+    ]
   },
   {
     "id": 1746526035945,
@@ -25,6 +36,68 @@
     "name": "Denis",
     "email": "TestTest54@gmail.com",
     "password": "$2b$10$R1ExUwlnD9gEB9KUJzU4..lO2i6WGWmRfQ5F3fqdnm.SqyIV5nnIa",
+    "role": "user"
+    "password": "$2b$10$Vck2nK5pqk7k1T5ujMxU1OaXP.RjzZimQ5bsyE5u4iRXYAhQeUkyG"
+  },
+  {
+    "id": 1746979424292,
+    "name": "Viktoriia",
+    "email": "v@ukr.net",
+    "password": "$2b$10$7eT/7oirpLk3jC.wbiaRK.N1Oh6LbhAiSG/otUhjvqV6d60iMSUsK",
+    "role": "user",
+    "tickets": [
+      {
+        "movieId": "1",
+        "date": "2025-05-11",
+        "time": "13:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "2",
+        "date": "2025-05-12",
+        "time": "11:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "3",
+        "date": "2025-05-12",
+        "time": "12:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "6",
+        "date": "2025-05-12",
+        "time": "11:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "5",
+        "date": "2025-05-12",
+        "time": "11:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      }
+    ]
+  },
+  {
+    "id": 1747055482804,
+    "name": "Illya Dmytrenko",
+    "email": "illadmitrenko666@gmail.com",
+    "password": "$2b$10$QtQ/ZKgKiN5gpBiTlnhzfONlFSF5Q7EHu/5G17vGqpupGMukKFUaa",
     "role": "user"
   }
 ]

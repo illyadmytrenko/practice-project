@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import "./Privacy.css";
-import React from "react";
+import "./privacy.css";
 
 function Privacy() {
   return (
