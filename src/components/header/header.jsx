@@ -59,6 +59,13 @@ export default function Header() {
         </Link>
 
         <Link
+          to={"/about"}
+          className="transition-colors duration-300 hover:text-green-400"
+        >
+          About Us
+        </Link>
+
+        <Link
           to={"/privacy"}
           className="transition-colors duration-300 hover:text-green-400"
         >
