@@ -3,6 +3,7 @@ import Logo from "../logo/logo";
 import { useModalAccount } from "../../context/modal-account-context";
 import CustomInput from "../custom-input/custom-input";
 import { Link, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 
 export default function Header() {
   const {
@@ -16,13 +17,15 @@ export default function Header() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  let user = {};
-  try {
-    user = JSON.parse(localStorage.getItem("user") || "{}");
-  } catch (e) {
-    user = {};
-  }
-  
+  const user = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user") || "{}");
+      // eslint-disable-next-line no-unused-vars
+    } catch (e) {
+      return {};
+    }
+  }, []);
+
   const isBlurred = isModalWindowSearchOpen
     ? "blur-sm pointer-events-none"
     : "";
@@ -33,7 +36,6 @@ export default function Header() {
     { to: "/schedule", label: "Schedule" },
     { to: "/movies-list", label: "Movies List" },
     { to: "/privacy", label: "Privacy" },
-    { to: "/admin", label: "Admin" },
   ];
 
   const openModalWindowAccount = (e) => {
@@ -56,6 +58,14 @@ export default function Header() {
             {label}
           </Link>
         ))}
+        {user.role === "admin" && (
+          <Link
+            to="/admin"
+            className="transition-colors duration-300 hover:text-green-400"
+          >
+            Admin
+          </Link>
+        )}
       </nav>
 
       <div className="relative z-20 flex gap-5 items-center">

@@ -196,7 +196,7 @@ export default function Cart() {
           <div className="flex gap-10">
             <div className="flex flex-1 flex-col gap-2 max-w-[600px]">
               <h2 className="text-3xl font-bold text-center !mb-8 !mt-2">
-                Екран
+                Screen
               </h2>
               {schedule.find((h) => h.hall === Number(hall))?.rows &&
                 Array.from({
@@ -253,10 +253,8 @@ export default function Cart() {
               <h2 className="text-2xl font-semibold !mb-4">Your order</h2>
               <div className="text-lg flex flex-col gap-3">
                 <div>
-                  <p className="text-gray-400">Фільм</p>
-                  <p className="text-base font-medium">
-                    {movie?.title || "Назва фільму"}
-                  </p>
+                  <p className="text-gray-400">Movie</p>
+                  <p className="text-base font-medium">{movie.title}</p>
                 </div>
                 <div>
                   <p className="text-gray-400">Date & Time</p>
