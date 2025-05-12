@@ -21,5 +21,57 @@
     "name": "Єлизавета",
     "email": "liza.papushina@gmail.com",
     "password": "$2b$10$Vck2nK5pqk7k1T5ujMxU1OaXP.RjzZimQ5bsyE5u4iRXYAhQeUkyG"
+  }, 
+  {
+    "id": 1746979424292,
+    "name": "Viktoriia",
+    "email": "v@ukr.net",
+    "password": "$2b$10$7eT/7oirpLk3jC.wbiaRK.N1Oh6LbhAiSG/otUhjvqV6d60iMSUsK",
+    "tickets": [
+      {
+        "movieId": "1",
+        "date": "2025-05-11",
+        "time": "13:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "2",
+        "date": "2025-05-12",
+        "time": "11:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "3",
+        "date": "2025-05-12",
+        "time": "12:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },
+      {
+        "movieId": "6",
+        "date": "2025-05-12",
+        "time": "11:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      },      {
+        "movieId": "5",
+        "date": "2025-05-12",
+        "time": "11:30",
+        "hall": 6,
+        "row": 5,
+        "seat": 5,
+        "price": 130
+      }
+    ]
   }
 ]
