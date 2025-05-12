@@ -8,6 +8,7 @@ import MoviesList from "./pages/movies-list/page";
 import AppProvider from "./context/app-provider";
 import PersonalAccount from "./pages/personal-account/page";
 import Privacy from "./pages/privacy/page";
+import About from "./pages/about/page";
 import AdminPage from "./pages/admin/page";
 import { useModalAccount } from "./context/modal-account-context";
 import Cart from "./pages/cart/page";
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="movies-list" element={<MoviesList />} />
             <Route path="privacy" element={<Privacy />} />
+            <Route path="about" element={<About />} />
             <Route
               path="profile"
               element={

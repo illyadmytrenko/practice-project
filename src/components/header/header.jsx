@@ -35,6 +35,7 @@ export default function Header() {
     { to: "/favorites", label: "Favorites" },
     { to: "/schedule", label: "Schedule" },
     { to: "/movies-list", label: "Movies List" },
+    { to: "/about", label: "About Us" },
     { to: "/privacy", label: "Privacy" },
   ];
 
