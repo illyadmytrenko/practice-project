@@ -3,12 +3,28 @@
     "id": 1746520854579,
     "name": "Papushina Liza",
     "email": "lizapapushina@gmail.com",
-    "password": "$2b$10$kHGkLwkuOYy.mQxF6KTMfexA32sVzGI1pQYh8FTbn3OnVmdSMVP0S"
+    "password": "$2b$10$kHGkLwkuOYy.mQxF6KTMfexA32sVzGI1pQYh8FTbn3OnVmdSMVP0S",
+    "role": "user"
   },
   {
     "id": 1746526035945,
     "name": "Єлизавета",
     "email": "liza.papushina@gmail.com",
-    "password": "$2b$10$Vck2nK5pqk7k1T5ujMxU1OaXP.RjzZimQ5bsyE5u4iRXYAhQeUkyG"
+    "password": "$2b$10$Vck2nK5pqk7k1T5ujMxU1OaXP.RjzZimQ5bsyE5u4iRXYAhQeUkyG",
+    "role": "user"
+  },
+  {
+    "id": 1746744430474,
+    "name": "Andrew",
+    "email": "TestTestTest@gmail.com",
+    "password": "$2b$10$wihKy1Oq1RT4IDaD6zZYnuZF2MJHISq/xkt5h5YSwpYJyVltUysJ2",
+    "role": "admin"
+  },
+  {
+    "id": 1746747966436,
+    "name": "Denis",
+    "email": "TestTest54@gmail.com",
+    "password": "$2b$10$R1ExUwlnD9gEB9KUJzU4..lO2i6WGWmRfQ5F3fqdnm.SqyIV5nnIa",
+    "role": "user"
   }
 ]
