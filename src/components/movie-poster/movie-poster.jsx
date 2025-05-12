@@ -87,7 +87,7 @@ export default function MoviePoster({
             onClick={() => toggleLike(movie)}
             icon="./assets/icons/like.png"
             text={
-              isLiked(movie.id) ? "Add to favorites" : "Remove from favorites"
+              isLiked(movie.id) ? "Remove from favorites" : "Add to favorites"
             }
             rotateIcon={isLiked(movie.id)}
           />
