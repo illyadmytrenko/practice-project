@@ -2,8 +2,11 @@
   {
     "id": "1",
     "title": "Dune: Part Two",
-    "year": 2024,
-    "genre": ["Sci-Fi", "Adventure"],
+    "year": "2024",
+    "genre": [
+      "Sci-Fi",
+      "Adventure"
+    ],
     "duration": 166,
     "country": "USA",
     "director": "Denis Villeneuve",
@@ -28,7 +31,10 @@
     "id": "2",
     "title": "Godzilla x Kong: The New Empire",
     "year": 2024,
-    "genre": ["Action", "Sci-Fi"],
+    "genre": [
+      "Action",
+      "Sci-Fi"
+    ],
     "duration": 115,
     "country": "USA",
     "director": "Adam Wingard",
@@ -53,7 +59,11 @@
     "id": "3",
     "title": "Kung Fu Panda 4",
     "year": 2024,
-    "genre": ["Animation", "Action", "Comedy"],
+    "genre": [
+      "Animation",
+      "Action",
+      "Comedy"
+    ],
     "duration": 94,
     "country": "USA",
     "director": "Mike Mitchell",
@@ -78,7 +88,10 @@
     "id": "4",
     "title": "Ghostbusters: Frozen Empire",
     "year": 2024,
-    "genre": ["Comedy", "Fantasy"],
+    "genre": [
+      "Comedy",
+      "Fantasy"
+    ],
     "duration": 110,
     "country": "USA",
     "director": "Gil Kenan",
@@ -103,7 +116,10 @@
     "id": "5",
     "title": "Civil War",
     "year": 2024,
-    "genre": ["Drama", "Thriller"],
+    "genre": [
+      "Drama",
+      "Thriller"
+    ],
     "duration": 109,
     "country": "USA",
     "director": "Alex Garland",
@@ -128,7 +144,10 @@
     "id": "6",
     "title": "The First Omen",
     "year": 2024,
-    "genre": ["Horror", "Mystery"],
+    "genre": [
+      "Horror",
+      "Mystery"
+    ],
     "duration": 119,
     "country": "USA",
     "director": "Arkasha Stevenson",
@@ -153,7 +172,11 @@
     "id": "7",
     "title": "Back to Black",
     "year": 2024,
-    "genre": ["Biography", "Drama", "Music"],
+    "genre": [
+      "Biography",
+      "Drama",
+      "Music"
+    ],
     "duration": 122,
     "country": "UK",
     "director": "Sam Taylor-Johnson",
@@ -178,9 +201,15 @@
     "id": "8",
     "title": "Monkey Man",
     "year": 2024,
-    "genre": ["Action", "Thriller"],
+    "genre": [
+      "Action",
+      "Thriller"
+    ],
     "duration": 121,
-    "country": ["India", "USA"],
+    "country": [
+      "India",
+      "USA"
+    ],
     "director": "Dev Patel",
     "producer": "Jordan Peele",
     "studio": "Monkeypaw Productions",
@@ -203,7 +232,10 @@
     "id": "9",
     "title": "Interstellar",
     "year": 2014,
-    "genre": ["Sci-Fi", "Drama"],
+    "genre": [
+      "Sci-Fi",
+      "Drama"
+    ],
     "duration": 169,
     "country": "USA",
     "director": "Christopher Nolan",
@@ -228,7 +260,11 @@
     "id": "10",
     "title": "Darkest Hour",
     "year": 2017,
-    "genre": ["Biography", "Drama", "History"],
+    "genre": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
     "duration": 125,
     "country": "USA",
     "director": "Joe Wright",
@@ -253,7 +289,11 @@
     "id": "11",
     "title": "Joker",
     "year": 2019,
-    "genre": ["Crime", "Drama", "Thriller"],
+    "genre": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
     "duration": 122,
     "country": "USA",
     "director": "Todd Phillips",
@@ -278,7 +318,11 @@
     "id": "12",
     "title": "Maleficent",
     "year": 2014,
-    "genre": ["Adventure", "Family", "Fantasy"],
+    "genre": [
+      "Adventure",
+      "Family",
+      "Fantasy"
+    ],
     "duration": 97,
     "country": "USA",
     "director": "Robert Stromberg",
@@ -292,7 +336,7 @@
       "Imelda Staunton",
       "Lesley Manville"
     ],
-    "rating": 7.0,
+    "rating": 7,
     "poster": "https://cdn.europosters.eu/image/750/maleficent-one-sheet-i23590.jpg",
     "trailer": "https://www.youtube.com/watch?v=5x6i5JmaCKM",
     "description": "Told from the perspective of one of Disney's most iconic villains, 'Maleficent' reveals the untold story of the misunderstood fairy. After suffering a deep betrayal, Maleficent's heart turns to stone, leading her to place a curse on the newborn daughter of King Stefan. However, as the child grows, Maleficent begins to realize that love and redemption may still be possible. A dark and visually enchanting reimagining of the classic 'Sleeping Beauty.'",
@@ -303,7 +347,11 @@
     "id": "13",
     "title": "Parasite",
     "year": 2019,
-    "genre": ["Comedy", "Drama", "Thriller"],
+    "genre": [
+      "Comedy",
+      "Drama",
+      "Thriller"
+    ],
     "duration": 132,
     "country": "South Korea",
     "director": "Bong Joon-ho",
@@ -328,7 +376,11 @@
     "id": "14",
     "title": "The Wolf of Wall Street",
     "year": 2013,
-    "genre": ["Biography", "Comedy", "Crime"],
+    "genre": [
+      "Biography",
+      "Comedy",
+      "Crime"
+    ],
     "duration": 180,
     "country": "USA",
     "director": "Martin Scorsese",
@@ -353,7 +405,10 @@
     "id": "15",
     "title": "Whiplash",
     "year": 2014,
-    "genre": ["Drama", "Music"],
+    "genre": [
+      "Drama",
+      "Music"
+    ],
     "duration": 107,
     "country": "USA",
     "director": "Damien Chazelle",
@@ -378,7 +433,10 @@
     "id": "16",
     "title": "Superbad",
     "year": 2007,
-    "genre": ["Comedy", "Teen"],
+    "genre": [
+      "Comedy",
+      "Teen"
+    ],
     "duration": 113,
     "country": "USA",
     "director": "Greg Mottola",

@@ -11,10 +11,12 @@ export default function Footer() {
             <a href="mailto:support@movietime.com">support@movietime.com</a>
           </p>
           <p>
-            Телефон: <a href="tel:+380501234567">+38 (050) 123-45-67</a>
+            Phone number: <a href="tel:+380501234567">+38 (050) 123-45-67</a>
           </p>
         </div>
-        <p className="text-xs text-gray-500 px-6">© 2025 Усі права захищено.</p>
+        <p className="text-xs text-gray-500 px-6">
+          © 2025 All rights reserved.
+        </p>
       </div>
     </footer>
   );

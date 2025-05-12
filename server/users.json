@@ -4,7 +4,7 @@
     "name": "Papushina Liza",
     "email": "lizapapushina@gmail.com",
     "password": "$2b$10$kHGkLwkuOYy.mQxF6KTMfexA32sVzGI1pQYh8FTbn3OnVmdSMVP0S",
-    "role": "user"
+    "role": "user",
     "tickets": [
       {
         "movieId": "3",
@@ -37,7 +37,6 @@
     "email": "TestTest54@gmail.com",
     "password": "$2b$10$R1ExUwlnD9gEB9KUJzU4..lO2i6WGWmRfQ5F3fqdnm.SqyIV5nnIa",
     "role": "user"
-    "password": "$2b$10$Vck2nK5pqk7k1T5ujMxU1OaXP.RjzZimQ5bsyE5u4iRXYAhQeUkyG"
   },
   {
     "id": 1746979424292,
@@ -98,6 +97,6 @@
     "name": "Illya Dmytrenko",
     "email": "illadmitrenko666@gmail.com",
     "password": "$2b$10$QtQ/ZKgKiN5gpBiTlnhzfONlFSF5Q7EHu/5G17vGqpupGMukKFUaa",
-    "role": "user"
+    "role": "admin"
   }
 ]
