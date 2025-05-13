@@ -38,7 +38,7 @@ export default function Cart() {
 
   useEffect(() => {
     axios
-      // .get(`http://localhost:5050/api/movies/${movieId}`)
+      //.get(`http://localhost:5050/api/movies/${movieId}`)
       .get(`http://localhost:5000/api/movies/${movieId}`)
       .then((response) => {
         setMovie(response.data);
@@ -72,6 +72,7 @@ export default function Cart() {
     }
     try {
       const response = await fetch("http://localhost:5000/api/payment", {
+      //const response = await fetch("http://localhost:5050/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

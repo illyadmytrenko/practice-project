@@ -174,4 +174,27 @@ router.post("/confirm", (req, res) => {
   });
 });
 
+// GET
+router.get("/stats", (req, res) => {
+  const users = readJson(usersPath);
+  const allTickets = users.flatMap(u => u.tickets || []);
+
+  const totalRevenue = allTickets.reduce((sum, t) => sum + (t.price || 0), 0);
+  const totalTickets = allTickets.length;
+
+  const byMovie = allTickets.reduce((map, t) => {
+    if (!map[t.movieId]) map[t.movieId] = { movieId: t.movieId, count: 0, revenue: 0 };
+    map[t.movieId].count++;
+    map[t.movieId].revenue += t.price || 0;
+    return map;
+  }, {});
+
+  const movies = readJson(path.join(__dirname, "..", "movies.json"));
+  const byMovieArr = Object.values(byMovie).map(item => ({
+    ...item,
+    title: (movies.find(m => String(m.id) === String(item.movieId)) || {}).title || item.movieId
+  }));
+
+  res.json({ totalRevenue, totalTickets, byMovie: byMovieArr });
+});
 export default router;
