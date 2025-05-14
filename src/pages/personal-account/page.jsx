@@ -26,7 +26,8 @@ export default function PersonalAccount() {
       return;
     }
 
-    axios.get("http://localhost:5000/api/users").then((res) => {
+     axios.get("http://localhost:5000/api/users").then((res) => {
+    //axios.get("http://localhost:5050/api/users").then((res) => {
       const foundUser = res.data.find((u) => u.id === stored.id);
       setUser(foundUser);
     });

@@ -8,7 +8,7 @@ export function ScheduleProvider({ children }) {
 
   useEffect(() => {
     axios
-      // .get("http://localhost:5050/api/schedule")
+      //.get("http://localhost:5050/api/schedule")
       .get("http://localhost:5000/api/schedule")
       .then((res) => setSchedule(res.data))
       .catch((err) => console.error("Помилка при завантаженні розкладу:", err));

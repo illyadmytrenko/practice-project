@@ -6,7 +6,7 @@ import scheduleRoutes from "./routes/schedule.js";
 import paymentRoutes from "./routes/payment.js";
 
 const app = express();
-// const PORT = 5050;
+//const PORT = 5050;
 const PORT = 5000;
 
 app.use(cors());

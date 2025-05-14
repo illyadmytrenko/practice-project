@@ -2,6 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
+import './AdminPage.css'
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("movies");
@@ -34,14 +37,30 @@ export default function AdminPage() {
   const [editMovieData, setEditMovieData] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [scheduleData, setScheduleData] = useState([]);
+  const [selectedDates, setSelectedDates] = useState(null);
+  const [showAddScheduleModal, setShowAddScheduleModal] = useState(false);
+  const [showEditScheduleModal, setShowEditScheduleModal] = useState(false)
+  const [newScheduleItem, setNewScheduleItem] = useState({
+    hall: "",
+    movieId: "",
+    time: "",
+    price: "",
+    dates: []
+  });
+  const [scheduleToEdit, setScheduleToEdit] = useState(null);
+  const [scheduleToDelete, setScheduleToDelete] = useState(null);
+  const [stats, setStats] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(false);
+  const [errorStats, setErrorStats] = useState(null);
 
-  const tableClasses =
-    "min-w-full table-auto bg-white rounded-xl overflow-hidden shadow";
+
+
+  const tableClasses = "min-w-full table-auto bg-white rounded-xl overflow-hidden shadow";
   const theadClasses = "bg-green-800 text-white";
   const thClasses = "!px-3 !py-2 text-left font-semibold";
   const thClickableClasses = `${thClasses} cursor-pointer hover:bg-green-700 hover:text-white transition-colors`;
-  const rowClasses =
-    "odd:bg-gray-300 even:bg-gray-350 border-b border-gray-400";
+  const rowClasses = "odd:bg-gray-300 even:bg-gray-350 border-b border-gray-400";
   const tdClasses = "!px-3 !py-2";
   const rowFormClasses = "!mt-1 !p-2 !border !rounded";
   const MAX_DESC = 80;
@@ -276,7 +295,7 @@ export default function AdminPage() {
 
     try {
       const { data: createdMovie } = await axios.post(
-        // "http://localhost:5050/api/movies",
+        //"http://localhost:5050/api/movies",
         "http://localhost:5000/api/movies",
         body
       );
@@ -352,6 +371,49 @@ export default function AdminPage() {
     });
   }, [movies, sortColumn, sortDirection]);
 
+  const sortedSchedule = useMemo(() => {
+    const flat = scheduleData.flatMap(hallObj =>
+        hallObj.schedule.map(item => ({
+          id:      item.id,
+          hall:    hallObj.hall,
+          movieId: item.movieId,
+          time:    item.time,
+          price:   item.price,
+          dates:   item.dates,
+          title:   movies.find(m => String(m.id) === String(item.movieId))?.title || "",
+        }))
+    );
+    if (activeTab !== "schedule" || !sortColumn) return flat;
+      return [...flat].sort((a, b) => {
+        let aVal = a[sortColumn];
+          let bVal = b[sortColumn];
+            if (sortColumn === "movieId") {
+            aVal = Number(aVal);
+            bVal = Number(bVal);
+            }
+          if (typeof aVal === "number" && typeof bVal === "number") {
+            return sortDirection === "asc" ? aVal - bVal : bVal - aVal;
+            }
+            return sortDirection === "asc"
+            ? String(aVal).localeCompare(String(bVal))
+            : String(bVal).localeCompare(String(aVal));
+        });
+     }, [scheduleData, activeTab, sortColumn, sortDirection]);
+
+  const sortedByMovie = useMemo(() => {
+    if (activeTab !== "report" || !sortColumn) return stats?.byMovie || [];
+    return [...stats.byMovie].sort((a, b) => {
+      let aVal = a[sortColumn];
+      let bVal = b[sortColumn];
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return sortDirection === "asc" ? aVal - bVal : bVal - aVal;
+      }
+      return sortDirection === "asc"
+          ? String(aVal).localeCompare(String(bVal))
+          : String(bVal).localeCompare(String(aVal));
+    });
+  }, [stats, activeTab, sortColumn, sortDirection]);
+
   const editMovie = (id) => {
     const m = movies.find((x) => x.id === id);
     if (!m) return;
@@ -375,13 +437,15 @@ export default function AdminPage() {
     e.preventDefault();
     try {
       const body = {
-        ...editMovieData,
-        duration: hours * 60 + minutes,
-        genre: editMovieData.genre.split(",").map((s) => s.trim()),
-        cast: editMovieData.cast.split(",").map((s) => s.trim()),
+         ...editMovieData,
+          year: Number(editMovieData.year),
+          rating: parseFloat(editMovieData.rating),
+          duration: hours * 60 + minutes,
+          genre: editMovieData.genre.split(",").map((s) => s.trim()),
+          cast: editMovieData.cast.split(",").map((s) => s.trim()),
       };
       const { data: updated } = await axios.put(
-        // `http://localhost:5050/api/movies/${editMovieData.id}`,
+        //`http://localhost:5050/api/movies/${editMovieData.id}`,
         `http://localhost:5000/api/movies/${editMovieData.id}`,
         body
       );
@@ -399,8 +463,8 @@ export default function AdminPage() {
   };
   const confirmDelete = async () => {
     try {
-      // await axios.delete(`http://localhost:5050/api/movies/${deleteId}`);
-      await axios.delete(`http://localhost:5000/api/movies/${deleteId}`);
+      //await axios.delete(`http://localhost:5050/api/movies/${deleteId}`);
+       await axios.delete(`http://localhost:5000/api/movies/${deleteId}`);
       setMovies((prev) => prev.filter((m) => m.id !== deleteId));
       setDeleteId(null);
     } catch (err) {
@@ -409,15 +473,116 @@ export default function AdminPage() {
     }
   };
 
+  const handleScheduleChange = (e) => {
+    const { name, value } = e.target;
+    setNewScheduleItem(prev => ({
+      ...prev,
+      [name]: name === 'dates'
+          ? value.split(',').map(s => s.trim())
+          : value
+    }));
+  };
+
+  const handleScheduleEditSubmit = async (e) => {
+     e.preventDefault();
+     try {
+         const { data: updated } = await axios.put(
+               // `http://localhost:5050/api/schedule/${scheduleToEdit.id}`,
+             `http://localhost:5000/api/schedule/${scheduleToEdit.id}`,
+               newScheduleItem
+             );
+          setScheduleData(prev =>
+              prev.map(hallObj => ({
+                ...hallObj,
+                schedule: hallObj.schedule.map(item =>
+                        item.id === updated.id ? updated : item
+                )
+              }))
+          );
+          setShowEditScheduleModal(false);
+          setScheduleToEdit(null);
+          setNewScheduleItem({ hall: "", movieId: "", time: "", price: "", dates: [] });
+          } catch (err) {
+          console.error("Ошибка редактирования сеанса:", err);
+       }
+  };
+  const handleScheduleAddSubmit = async (e) => {
+     e.preventDefault();
+     try {
+       const { data: created } = await axios.post(
+           // "http://localhost:5050/api/schedule",
+           "http://localhost:5050/api/schedule",
+            newScheduleItem
+       );
+      setScheduleData(prev =>
+          prev.map(hallObj =>
+                  String(hallObj.hall) === String(newScheduleItem.hall)
+                  ? { ...hallObj, schedule: [...hallObj.schedule, created] }
+                      : hallObj
+          )
+      );
+      setShowAddScheduleModal(false);
+      setNewScheduleItem({ hall: "", movieId: "", time: "", price: "", dates: [] });
+         } catch (err) {
+       console.error("Ошибка добавления сеанса:", err);
+     }
+   };
+  const editSchedule = (item) => {
+    setScheduleToEdit(item);
+    setNewScheduleItem({ ...item });
+    setShowEditScheduleModal(true);
+  };
+
+  const deleteSchedule = (item) => {
+    setScheduleToDelete(item);
+  };
+
+  const confirmDeleteSchedule = async () => {
+     try {
+         await axios.delete(
+               // `http://localhost:5050/api/schedule/${scheduleToDelete.id}`
+             `http://localhost:5000/api/schedule/${scheduleToDelete.id}`
+         );
+         setScheduleData(prev =>
+             prev.map(hallObj => ({
+               ...hallObj,
+               schedule: hallObj.schedule.filter(item => item.id !== scheduleToDelete.id)
+             }))
+         );
+         setScheduleToDelete(null);
+         } catch (err) {
+         console.error("Ошибка удаления сеанса:", err);
+     }
+  };
+
   useEffect(() => {
-    // axios.get("http://localhost:5050/api/movies").then((res) => setMovies(res.data));
-    // axios.get("http://localhost:5050/api/users").then((res) => setUsers(res.data));
-    axios
-      .get("http://localhost:5000/api/movies")
-      .then((res) => setMovies(res.data));
-    axios
-      .get("http://localhost:5000/api/users")
-      .then((res) => setUsers(res.data));
+    // axios.get("http://localhost:5000/api/movies")
+    //     .then(res => setMovies(res.data));
+    // axios.get("http://localhost:5000/api/users")
+    //     .then(res => setUsers(res.data));
+    // axios.get("http://localhost:5000/api/schedule")
+    //     .then(res => setScheduleData(res.data));
+    //
+    // setLoadingStats(true);
+    // axios.get("http://localhost:5000/api/payment/stats")
+    axios.get("http://localhost:5050/api/movies")
+        .then(res => setMovies(res.data));
+    axios.get("http://localhost:5050/api/users")
+        .then(res => setUsers(res.data));
+    axios.get("http://localhost:5050/api/schedule")
+        .then(res => setScheduleData(res.data));
+
+    setLoadingStats(true);
+    axios.get("http://localhost:5050/api/payment/stats")
+        .then(res => {
+          setStats(res.data);
+          setErrorStats(null);
+        })
+        .catch(err => {
+          console.error(err);
+          setErrorStats("Failed to load stats");
+        })
+        .finally(() => setLoadingStats(false));
   }, []);
 
   const renderMoviesTable = () => (
@@ -660,6 +825,101 @@ export default function AdminPage() {
     </div>
   );
 
+  const renderScheduleTable = () => (
+      <div className="overflow-auto">
+          <table className={"!min-w-full !table-fixed !bg-white !rounded-xl !overflow-hidden !shadow"}>
+              <thead className={theadClasses}>
+              <tr>
+                  <th
+                      className={thClickableClasses}
+                      onClick={() => handleSort("hall")}
+                  >
+                  Hall
+                  {activeTab === "schedule" && sortColumn === "hall" && (
+                      <span className="ml-1">
+                  {sortDirection === "asc" ? "▲" : "▼"}
+                       </span>
+                  )}
+                  </th>
+                  <th
+                      className={thClickableClasses}
+                      onClick={() => handleSort("time")}
+                  >
+                    Time
+                    {activeTab === "schedule" && sortColumn === "time" && (
+                        <span className="ml-1">
+                    {sortDirection === "asc" ? "▲" : "▼"}
+                        </span>
+                    )}
+                  </th>
+                  <th
+                      className={thClickableClasses}
+                      onClick={() => handleSort("movieId")}
+                  >
+                    Movie ID
+                    {activeTab === "schedule" && sortColumn === "movieId" && (
+                        <span className="ml-1">
+                    {sortDirection === "asc" ? "▲" : "▼"}
+                        </span>
+                    )}
+                  </th>
+                  <th
+                      className={thClickableClasses}
+                      onClick={() => handleSort("title")}
+                  >
+                  Title
+                  {activeTab === "schedule" && sortColumn === "title" && (
+                      <span className="ml-1">
+                  {sortDirection === "asc" ? "▲" : "▼"}
+                      </span>
+                  )}
+                  </th>
+                  <th
+                      className={thClickableClasses}
+                      onClick={() => handleSort("price")}
+                  >
+                    Price
+                    {activeTab === "schedule" && sortColumn === "price" && (
+                        <span className="ml-1">
+                  {sortDirection === "asc" ? "▲" : "▼"}
+                        </span>
+                    )}
+                  </th>
+                  <th className={thClasses}>Dates</th>
+                  <th className={thClasses}>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+          {sortedSchedule.map((e, i) => (
+               <tr key={i} className={rowClasses}>
+                   <td className={tdClasses}>{e.hall}</td>
+                   <td className={tdClasses}>{e.time}</td>
+                   <td className={tdClasses}>{e.movieId}</td>
+                   <td className={tdClasses}>{e.title}</td>
+                   <td className={tdClasses}>{e.price}</td>
+                   <td
+                       className={`${tdClasses} cursor-pointer hover:text-green-800`}
+                       onClick={() => setSelectedDates(e.dates)}
+                   >
+                       {`${e.dates[0]} — ${e.dates[e.dates.length - 1]}`}
+                   </td>
+                   <td className={tdClasses}>
+                       <div className="!flex !items-center !justify-left !space-x-4">
+                            <button onClick={() => editSchedule(e)}>
+                                <PencilIcon className="!h-6 !w-6 text-green-600 transform transition-transform duration-200 hover:scale-120" />
+                            </button>
+                            <button onClick={() => deleteSchedule(e)}>
+                                <TrashIcon className="!h-6 !w-6 text-red-400 transform transition-transform duration-200 hover:scale-120" />
+                            </button>
+                       </div>
+                   </td>
+               </tr>
+          ))}
+          </tbody>
+          </table>
+      </div>
+  );
+
   const renderUsersTable = () => (
     <div className="overflow-auto">
       <table className={tableClasses}>
@@ -714,12 +974,84 @@ export default function AdminPage() {
     </div>
   );
 
+  const renderReport = () => {
+    if (loadingStats) return <p>Loading...</p>;
+    if (errorStats)   return <p className="text-red-600">{errorStats}</p>;
+    if (!stats)       return null;
+
+    return (
+        <div className="!overflow-auto">
+          <div className="text-white !p-4 !rounded-xl !mb-6 !flex !flex-col !md:flex-row !md:items-center !md:justify-between">
+            <h3 className="!text-xl !font-semibold !mb-4 !md:mb-0">Overall Sales Statistics</h3>
+            <div className="!flex !space-x-8 !text-center">
+              <div>
+                <p className="!text-sm !uppercase !opacity-75">Tickets Sold</p>
+                <p className="!text-2xl !font-bold">{stats.totalTickets}</p>
+              </div>
+              <div>
+                <p className="!text-sm !uppercase !opacity-75">Total Revenue</p>
+                <p className="!text-2xl !font-bold">{stats.totalRevenue} ₴</p>
+              </div>
+            </div>
+          </div>
+
+          <table className={tableClasses}>
+            <thead className={theadClasses}>
+            <tr>
+              <th
+                  className={thClickableClasses}
+                  onClick={() => handleSort("title")}
+              >
+                Movie
+                {activeTab === "report" && sortColumn === "title" && (
+                    <span className="ml-1">{sortDirection === "asc" ? "▲" : "▼"}</span>
+                )}
+              </th>
+              <th
+                  className={`${thClickableClasses} text-right`}
+                  onClick={() => handleSort("count")}
+              >
+                Tickets
+                {activeTab === "report" && sortColumn === "count" && (
+                    <span className="ml-1">{sortDirection === "asc" ? "▲" : "▼"}</span>
+                )}
+              </th>
+              <th
+                  className={`${thClickableClasses} text-right`}
+                  onClick={() => handleSort("revenue")}
+              >
+                Revenue
+                {activeTab === "report" && sortColumn === "revenue" && (
+                    <span className="ml-1">{sortDirection === "asc" ? "▲" : "▼"}</span>
+                )}
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            {sortedByMovie.map(m => (
+                <tr key={m.movieId} className={rowClasses}>
+                  <td className={tdClasses}>{m.title}</td>
+                  <td className={`${tdClasses} text-right`}>{m.count}</td>
+                  <td className={`${tdClasses} text-right`}>{m.revenue} ₴</td>
+                </tr>
+            ))}
+            </tbody>
+          </table>
+        </div>
+    );
+  };
+
+
   const renderContent = () => {
     switch (activeTab) {
       case "movies":
         return renderMoviesTable();
       case "users":
         return renderUsersTable();
+      case "schedule":
+        return renderScheduleTable();
+      case "report":
+        return renderReport();
       default:
         return (
           <div className="text-white text-xl font-medium">Coming soon...</div>
@@ -729,7 +1061,7 @@ export default function AdminPage() {
 
   const tabs = [
     { id: "movies", label: "Movies" },
-    { id: "theaters", label: "Theaters" },
+    { id: "schedule", label: "Schedule" },
     { id: "users", label: "Users" },
     { id: "report", label: "Report" },
   ];
@@ -754,12 +1086,26 @@ export default function AdminPage() {
                 </button>
               ))}
             </nav>
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="hover:bg-zinc-700 text-green-700 !px-3 !py-4 rounded-lg font-medium"
-            >
-              + Add Movie
-            </button>
+            {activeTab === "movies" && (
+                <button
+                    onClick={() => setShowAddModal(true)}
+                    className="hover:bg-zinc-700 text-green-700 !px-3 !py-4 rounded-lg font-medium"
+                    >
+                    + Add Movie
+                </button>
+            )}
+            {activeTab === "schedule" && (
+                <button
+                    onClick={() => {
+                        setScheduleToEdit(null)
+                        setNewScheduleItem({ hall: "", movieId: "", time: "", price: "", dates: [] })
+                        setShowAddScheduleModal(true)
+                    }}
+                    className="hover:bg-zinc-700 text-green-700 !px-3 !py-4 rounded-lg font-medium"
+                >
+                  + New Item
+                </button>
+            )}
           </div>
         </aside>
         <main className="!flex-grow !mb-8">{renderContent()}</main>
@@ -798,7 +1144,7 @@ export default function AdminPage() {
             <h3 className="text-xl font-semibold">Add New Movie</h3>
 
             <div className="!grid !grid-cols-2 !gap-4">
-              <label className="flex flex-col">
+              <label className="flex flex-col !col-span-2">
                 Title
                 <input
                   name="title"
@@ -1039,7 +1385,7 @@ export default function AdminPage() {
             <h3 className="text-xl font-semibold">Edit Movie</h3>
 
             <div className="grid grid-cols-2 !gap-4">
-              <label className="!flex !flex-col">
+              <label className="!flex !flex-col !col-span-2">
                 Title
                 <input
                   name="title"
@@ -1253,6 +1599,220 @@ export default function AdminPage() {
             </div>
           </form>
         </div>
+      )}
+      {selectedDates && (
+          <div className="fixed inset-0 z-50 !flex !items-center !justify-center">
+            <div className="absolute !inset-0 !bg-opacity-20 backdrop-blur-sm" />
+
+            <div className="relative bg-white rounded-xl !p-6 !max-w-md !w-full">
+              <button
+                  onClick={() => setSelectedDates(null)}
+                  className="!absolute !top-4 !right-6 text-gray-600 hover:text-gray-900 text-5xl leading-none"
+              >
+                &times;
+              </button>
+              <h3 className="text-lg font-semibold !mb-4 text-left">
+                Seance Dates
+              </h3>
+              <Calendar
+                  className="!border-0"
+                  view="month"
+                  showNeighboringMonth={false}
+                  minDate={new Date(selectedDates[0])}
+                  maxDate={new Date(selectedDates[selectedDates.length - 1])}
+                  tileDisabled={({ date }) =>
+                      !selectedDates.includes(date.toISOString().slice(0, 10))
+                  }
+                  tileContent={({ date }) =>
+                      selectedDates.includes(date.toISOString().slice(0, 10)) ? (
+                          <div className="!bg-green-300 !rounded-full !h-full !w-full !opacity-50" />
+                      ) : null
+                  }
+              />
+            </div>
+          </div>
+      )}
+      {showAddScheduleModal && (
+          <div className="fixed inset-0 z-50 !flex !items-center !justify-center">
+            <div className="absolute !inset-0 !bg-opacity-20 backdrop-blur-sm" />
+            <form
+                onSubmit={handleScheduleAddSubmit}
+                className="relative bg-white rounded-xl !p-6 !max-w-md !w-full !space-y-4"
+            >
+              <button
+                  type="button"
+                  onClick={() => setShowAddScheduleModal(false)}
+                  className="!absolute !top-4 !right-6 text-gray-600 hover:text-gray-900 text-5xl leading-none"
+              >
+                &times;
+              </button>
+              <h3 className="text-xl font-semibold">Add Schedule Item</h3>
+              <label className="flex flex-col">
+                Hall
+                <input
+                    name="hall"
+                    value={newScheduleItem.hall}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+              <label className="flex flex-col">
+                Movie ID
+                <input
+                    name="movieId"
+                    value={newScheduleItem.movieId}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+              <label className="flex flex-col">
+                Time
+                <input
+                    name="time"
+                    type="time"
+                    value={newScheduleItem.time}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+              <label className="flex flex-col">
+                Price
+                <input
+                    name="price"
+                    type="number"
+                    value={newScheduleItem.price}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+              <label className="flex flex-col">
+                Dates (comma-separated)
+                <input
+                    name="dates"
+                    value={newScheduleItem.dates.join(",")}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+              <div className="!flex !justify-end !space-x-4">
+                <button
+                    type="button"
+                    onClick={() => setShowAddScheduleModal(false)}
+                    className="!px-4 !py-2 rounded !border hover:bg-zinc-100"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="!px-4 !py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+      )}
+      {showEditScheduleModal && (
+          <div className="fixed inset-0 z-50 !flex !items-center !justify-center">
+            <div className="absolute !inset-0 !bg-opacity-20 backdrop-blur-sm" />
+            <form
+                onSubmit={handleScheduleEditSubmit}
+                className="relative bg-white !rounded-xl !p-6 !max-w-md !w-full !space-y-4"
+            >
+              <button
+                  type="button"
+                  onClick={() => setShowEditScheduleModal(false)}
+                  className="absolute !top-4 !right-6 text-gray-600 !text-5xl leading-none"
+              >
+                &times;
+              </button>
+              <h3 className="text-xl font-semibold">Edit Schedule Item</h3>
+
+              <label className="!flex !flex-col">
+                Hall
+                <input
+                    name="hall"
+                    value={newScheduleItem.hall}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+
+              <label className="flex flex-col">
+                Movie ID
+                <input
+                    name="movieId"
+                    value={newScheduleItem.movieId}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+
+              <label className="flex flex-col">
+                Time
+                <input
+                    name="time"
+                    type="time"
+                    value={newScheduleItem.time}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+
+              <label className="flex flex-col">
+                Price
+                <input
+                    name="price"
+                    type="number"
+                    value={newScheduleItem.price}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+
+              <label className="flex flex-col">
+                Dates (comma-separated)
+                <input
+                    name="dates"
+                    value={newScheduleItem.dates.join(",")}
+                    onChange={handleScheduleChange}
+                    className={rowFormClasses}
+                />
+              </label>
+
+              <div className="flex justify-end !space-x-4">
+                <button
+                    type="button"
+                    onClick={() => setShowEditScheduleModal(false)}
+                    className="!px-4 !py-2 rounded !border hover:bg-zinc-100"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="!px-4 !py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+      )}
+      {scheduleToDelete && (
+          <div className="fixed inset-0 z-50 !flex !items-center !justify-center">
+            <div className="absolute !inset-0 !bg-opacity-20 backdrop-blur-sm" />
+            <div className="bg-white rounded-xl !p-6 !z-10">
+              <p className="!mb-4">Are you sure you want to delete this schedule item?</p>
+              <div className="!flex !justify-center !space-x-4">
+                <button
+                    onClick={() => setScheduleToDelete(null)}
+                    className="!px-4 !py-2 !border rounded hover:bg-zinc-100"
+                >
+                  Cancel
+                </button>
+                <button
+                    onClick={confirmDeleteSchedule}
+                    className="bg-red-600 text-white !px-4 !py-2 rounded hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
       )}
     </div>
   );
