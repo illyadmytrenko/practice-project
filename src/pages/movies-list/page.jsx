@@ -56,7 +56,7 @@ export default function MoviesList() {
         const term = filters.searchTerm.toLowerCase();
         return term
           ? movie.title.toLowerCase().includes(term) ||
-              movie.originalTitle.toLowerCase().includes(term)
+              movie.title.toLowerCase().includes(term)
           : true;
       })
       .filter((movie) =>
