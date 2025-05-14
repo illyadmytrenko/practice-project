@@ -60,11 +60,11 @@ router.post("/", async (req, res) => {
     amount: amount,
     ccy: 980,
     redirectUrl,
-    webHookUrl: "https://ba25-188-163-80-16.ngrok-free.app/api/payment/confirm",
+    webHookUrl: "https://1bdf-188-163-80-16.ngrok-free.app/api/payment/confirm",
     validity: 3600,
     merchantPaymInfo: {
       destination: "Оплата квитків у кінотеатрі",
-      basketOrder: [{ name, qty, sum: sum, total: sum, icon }],
+      basketOrder: [{ name, qty, sum: sum, total: sum * qty, icon }],
     },
   };
 
@@ -177,22 +177,25 @@ router.post("/confirm", (req, res) => {
 // GET
 router.get("/stats", (req, res) => {
   const users = readJson(usersPath);
-  const allTickets = users.flatMap(u => u.tickets || []);
+  const allTickets = users.flatMap((u) => u.tickets || []);
 
   const totalRevenue = allTickets.reduce((sum, t) => sum + (t.price || 0), 0);
   const totalTickets = allTickets.length;
 
   const byMovie = allTickets.reduce((map, t) => {
-    if (!map[t.movieId]) map[t.movieId] = { movieId: t.movieId, count: 0, revenue: 0 };
+    if (!map[t.movieId])
+      map[t.movieId] = { movieId: t.movieId, count: 0, revenue: 0 };
     map[t.movieId].count++;
     map[t.movieId].revenue += t.price || 0;
     return map;
   }, {});
 
   const movies = readJson(path.join(__dirname, "..", "movies.json"));
-  const byMovieArr = Object.values(byMovie).map(item => ({
+  const byMovieArr = Object.values(byMovie).map((item) => ({
     ...item,
-    title: (movies.find(m => String(m.id) === String(item.movieId)) || {}).title || item.movieId
+    title:
+      (movies.find((m) => String(m.id) === String(item.movieId)) || {}).title ||
+      item.movieId,
   }));
 
   res.json({ totalRevenue, totalTickets, byMovie: byMovieArr });

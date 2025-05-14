@@ -48,6 +48,15 @@ export default function Cart() {
       });
   }, [movieId]);
 
+  useEffect(() => {
+    const seatsFromStorage =
+      JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
+    const priceFromStorage = Number(sessionStorage.getItem("totalPrice")) || 0;
+
+    setChosenSeats(seatsFromStorage);
+    setTotalPrice(priceFromStorage);
+  }, []);
+
   const handleChooseSeat = (seat) => {
     const exists = chosenSeats.some(
       (s) => s.row === seat.row && s.seat === seat.seat
@@ -72,14 +81,14 @@ export default function Cart() {
     }
     try {
       const response = await fetch("http://localhost:5000/api/payment", {
-      //const response = await fetch("http://localhost:5050/api/payment", {
+        //const response = await fetch("http://localhost:5050/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: storedTotalPrice * 100,
+          amount: totalPrice * 100,
           redirectUrl: "http://localhost:5173/",
           name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
-          qty: storedSeats.length,
+          qty: chosenSeats.length,
           sum: price * 100,
           icon: movie.poster,
           userId,
@@ -87,7 +96,7 @@ export default function Cart() {
           date,
           time,
           hall,
-          seats: storedSeats,
+          seats: chosenSeats,
         }),
       });
 
@@ -107,14 +116,9 @@ export default function Cart() {
     }
   };
 
-  const storedSeats = JSON.parse(sessionStorage.getItem("chosenSeats")) || [];
-  const storedTotalPrice = sessionStorage.getItem("totalPrice") || 0;
-
   useEffect(() => {
-    if (chosenSeats.length > 0) {
-      sessionStorage.setItem("chosenSeats", JSON.stringify(chosenSeats));
-      sessionStorage.setItem("totalPrice", totalPrice);
-    }
+    sessionStorage.setItem("chosenSeats", JSON.stringify(chosenSeats));
+    sessionStorage.setItem("totalPrice", totalPrice);
   }, [chosenSeats, totalPrice]);
 
   if (!state) {
