@@ -27,7 +27,6 @@ export default function PersonalAccount() {
     }
 
      axios.get("http://localhost:5000/api/users").then((res) => {
-    //axios.get("http://localhost:5050/api/users").then((res) => {
       const foundUser = res.data.find((u) => u.id === stored.id);
       setUser(foundUser);
     });
@@ -108,7 +107,7 @@ export default function PersonalAccount() {
     doc.setFont("courier", "normal");
     doc.setFontSize(18);
     let currentY = topY + lineHeight * 2;
-    doc.text(`Title: ${movie.originalTitle}`, contentLeft, currentY);
+    doc.text(`Title: ${movie.title}`, contentLeft, currentY);
     currentY += lineHeight;
     doc.text(`Genre: ${movie.genre?.join(", ") || "-"}`, contentLeft, currentY);
     currentY += lineHeight;
@@ -130,7 +129,7 @@ export default function PersonalAccount() {
     currentY += lineHeight;
     doc.text(`Hall: ${ticket.hall}`, contentLeft, currentY);
 
-    const qrText = `${movie.originalTitle} | ${ticket.date} ${ticket.time} | Row ${ticket.row}, Seat ${ticket.seat}`;
+    const qrText = `${movie.title} | ${ticket.date} ${ticket.time} | Row ${ticket.row}, Seat ${ticket.seat}`;
     const qrDataUrl = await QRCode.toDataURL(qrText);
     doc.addImage(
       qrDataUrl,
@@ -167,7 +166,7 @@ export default function PersonalAccount() {
     doc.text("Email: support@movietime.com", 120, 200);
     doc.text("Phone: +38 (050) 123-45-67", 220, 200);
 
-    doc.save(`${movie.originalTitle}-ticket.pdf`);
+    doc.save(`${movie.title}-ticket.pdf`);
   };
 
   const loadImageAsBase64 = async (url) => {
