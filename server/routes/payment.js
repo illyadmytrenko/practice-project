@@ -60,7 +60,8 @@ router.post("/", async (req, res) => {
     amount: amount,
     ccy: 980,
     redirectUrl,
-    webHookUrl: "https://1bdf-188-163-80-16.ngrok-free.app/api/payment/confirm",
+    webHookUrl:
+      "https://meet-amazingly-moccasin.ngrok-free.app/api/payment/confirm",
     validity: 3600,
     merchantPaymInfo: {
       destination: "Оплата квитків у кінотеатрі",
