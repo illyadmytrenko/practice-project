@@ -1,0 +1,460 @@
+[
+  {
+    "id": "1",
+    "title": "Dune: Part Two",
+    "year": 2024,
+    "genre": [
+      "Sci-Fi",
+      "Adventure"
+    ],
+    "duration": 166,
+    "country": "USA",
+    "director": "Denis Villeneuve",
+    "producer": "Mary Parent",
+    "studio": "Legendary Pictures",
+    "cast": [
+      "Timothée Chalamet",
+      "Zendaya",
+      "Rebecca Ferguson",
+      "Javier Bardem",
+      "Austin Butler",
+      "Florence Pugh"
+    ],
+    "rating": 8.5,
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/52/Dune_Part_Two_poster.jpeg",
+    "trailer": "https://www.youtube.com/watch?v=U2Qp5pL3ovA",
+    "description": "Paul Atreides (Timothée Chalamet) allies himself with Chani (Zendaya) and the Fremen in their battle against the conspirators who destroyed his family. As Paul navigates deeper into the mystical world of Arrakis, he confronts immense personal and political challenges, mastering the complexities of leadership and destiny. Enhanced by breathtaking visuals of vast deserts and intricate battles, the narrative deepens significantly, exploring themes of revenge, love, and sacrifice in a gripping continuation of the epic saga.",
+    "isNowShowing": true,
+    "ageRestriction": "12+"
+  },
+  {
+    "id": "2",
+    "title": "Godzilla x Kong: The New Empire",
+    "year": 2024,
+    "genre": [
+      "Action",
+      "Sci-Fi"
+    ],
+    "duration": 115,
+    "country": "USA",
+    "director": "Adam Wingard",
+    "producer": "Alex Garcia",
+    "studio": "Legendary Pictures",
+    "cast": [
+      "Rebecca Hall",
+      "Dan Stevens",
+      "Brian Tyree Henry",
+      "Kaylee Hottle",
+      "Fala Chen",
+      "Alex Ferns"
+    ],
+    "rating": 6.7,
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/be/Godzilla_x_kong_the_new_empire_poster.jpg",
+    "trailer": "https://www.youtube.com/watch?v=lV1OOlGwExM",
+    "description": "The legendary Titans, Godzilla and Kong, face a new colossal threat that pushes their rivalry to a new partnership. Scientist Dr. Ilene Andrews (Rebecca Hall) and Nathan Lind (Dan Stevens) uncover deeper mysteries beneath the Earth's surface, revealing hidden secrets and formidable new creatures. With breathtaking visuals and extraordinary battles that stretch across continents and beneath oceans, the film explores loyalty, courage, and unity, crafting a gripping story of survival and alliance against overwhelming odds.",
+    "isNowShowing": true,
+    "ageRestriction": "12+"
+  },
+  {
+    "id": "3",
+    "title": "Kung Fu Panda 4",
+    "year": 2024,
+    "genre": [
+      "Animation",
+      "Action",
+      "Comedy"
+    ],
+    "duration": 94,
+    "country": "USA",
+    "director": "Mike Mitchell",
+    "producer": "Rebecca Huntley",
+    "studio": "DreamWorks Animation",
+    "cast": [
+      "Jack Black",
+      "Awkwafina",
+      "Bryan Cranston",
+      "James Hong",
+      "Dustin Hoffman",
+      "Viola Davis"
+    ],
+    "rating": 7.2,
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7f/Kung_Fu_Panda_4_poster.jpg",
+    "trailer": "https://www.youtube.com/watch?v=5o-reTATkBU&pp=0gcJCdgAo7VqN5tD",
+    "description": "Po (Jack Black) faces his biggest challenge yet as he mentors a spirited new warrior to confront the mysterious villain known as The Chameleon (Awkwafina). Amidst hilarious moments and intense martial arts sequences, Po explores deeper lessons about friendship, responsibility, and inner strength. The vibrant animation beautifully complements a narrative rich in emotional depth, cultural nuances, and thrilling action sequences, delivering an inspiring and heartwarming adventure.",
+    "isNowShowing": true,
+    "ageRestriction": "6+"
+  },
+  {
+    "id": "4",
+    "title": "Ghostbusters: Frozen Empire",
+    "year": 2024,
+    "genre": [
+      "Comedy",
+      "Fantasy"
+    ],
+    "duration": 110,
+    "country": "USA",
+    "director": "Gil Kenan",
+    "producer": "Jason Reitman",
+    "studio": "Columbia Pictures",
+    "cast": [
+      "Paul Rudd",
+      "Carrie Coon",
+      "Finn Wolfhard",
+      "Bill Murray",
+      "Dan Aykroyd",
+      "Ernie Hudson"
+    ],
+    "rating": 6.5,
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRasknWp98XlN2krxAQz-31xjL911lVed49gw&s",
+    "trailer": "https://www.youtube.com/watch?v=wFNK_KEmcWs",
+    "description": "The Spengler family returns to New York City, reuniting with the original Ghostbusters to battle an even more potent supernatural threat. Phoebe (Carrie Coon), Trevor (Finn Wolfhard), and Mr. Grooberson (Paul Rudd) lead a heartwarming and action-packed journey that pays homage to the original films while adding contemporary twists. With humor, nostalgia, and stunning spectral visuals, the film deepens character dynamics and introduces profound themes of legacy and bravery, resonating with fans old and new.",
+    "isNowShowing": true,
+    "ageRestriction": "10+"
+  },
+  {
+    "id": "5",
+    "title": "Civil War",
+    "year": 2024,
+    "genre": [
+      "Drama",
+      "Thriller"
+    ],
+    "duration": 109,
+    "country": "USA",
+    "director": "Alex Garland",
+    "producer": "Andrew Macdonald",
+    "studio": "A24",
+    "cast": [
+      "Kirsten Dunst",
+      "Wagner Moura",
+      "Cailee Spaeny",
+      "Stephen McKinley Henderson",
+      "Toby Huss",
+      "Sofia Boutella"
+    ],
+    "rating": 7.8,
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG5MCD4bZ_MV3_C2X7Fj6YklDdSi91PNORRQ&s",
+    "trailer": "https://www.youtube.com/watch?v=c2G18nIVpNE",
+    "description": "Set against the backdrop of a fractured America torn by civil conflict, a resilient family journeys across a divided nation seeking safety and reconciliation. Kirsten Dunst portrays a determined mother navigating danger and moral dilemmas, while Wagner Moura delivers a powerful performance as a compassionate ally. Stunning visuals and tense, emotional encounters underscore the narrative, vividly depicting the human cost of division and the enduring strength found in unity and hope.",
+    "isNowShowing": true,
+    "ageRestriction": "16+"
+  },
+  {
+    "id": "6",
+    "title": "The First Omen",
+    "year": 2024,
+    "genre": [
+      "Horror",
+      "Mystery"
+    ],
+    "duration": 119,
+    "country": "USA",
+    "director": "Arkasha Stevenson",
+    "producer": "David S. Goyer",
+    "studio": "20th Century Studios",
+    "cast": [
+      "Nell Tiger Free",
+      "Ralph Ineson",
+      "Bill Nighy",
+      "Alice Braga",
+      "Franco Nero",
+      "Matilda De Angelis"
+    ],
+    "rating": 6.9,
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/70/The_First_Omen_poster.jpg",
+    "trailer": "https://www.youtube.com/watch?v=lmN1Op8ygno",
+    "description": "In an eerie journey through the Vatican, an American woman (Nell Tiger Free) unearths a chilling conspiracy that threatens powerful institutions and global stability. Supported by enigmatic characters portrayed by Ralph Ineson and Bill Nighy, she navigates dark corridors and hidden archives in a gripping thriller. Atmospheric visuals and intricate plot twists create a tense narrative exploring faith, power, and corruption, captivating audiences with suspense and intrigue.",
+    "isNowShowing": true,
+    "ageRestriction": "18+"
+  },
+  {
+    "id": "7",
+    "title": "Back to Black",
+    "year": 2024,
+    "genre": [
+      "Biography",
+      "Drama",
+      "Music"
+    ],
+    "duration": 122,
+    "country": "UK",
+    "director": "Sam Taylor-Johnson",
+    "producer": "Alison Owen",
+    "studio": "StudioCanal",
+    "cast": [
+      "Marisa Abela",
+      "Jack O'Connell",
+      "Eddie Marsan",
+      "Lesley Manville",
+      "Sam Taylor-Johnson",
+      "Toby Regbo"
+    ],
+    "rating": 7.1,
+    "poster": "https://cdn.planetakino.ua/405_back-to-black1_2024/Media/Posters/vertical/opt_f14c236e-df92-456b-878b-33067bbec068.jpg",
+    "trailer": "https://www.youtube.com/watch?v=q9Y_4TYYdDQ",
+    "description": "This compelling biopic chronicles the life of iconic singer Amy Winehouse (Marisa Abela), capturing her meteoric rise to fame and the personal struggles she faced. Jack O'Connell and Eddie Marsan deliver nuanced performances, highlighting complex personal relationships and the pressures of celebrity life. Enhanced by vivid period visuals and deeply moving musical sequences, the film offers an empathetic, intimate look into Amy's extraordinary talent and troubled life, reflecting on fame, artistry, and vulnerability.",
+    "isNowShowing": true,
+    "ageRestriction": "16+"
+  },
+  {
+    "id": "8",
+    "title": "Monkey Man",
+    "year": 2024,
+    "genre": [
+      "Action",
+      "Thriller"
+    ],
+    "duration": 121,
+    "country": [
+      "India",
+      "USA"
+    ],
+    "director": "Dev Patel",
+    "producer": "Jordan Peele",
+    "studio": "Monkeypaw Productions",
+    "cast": [
+      "Dev Patel",
+      "Sharlto Copley",
+      "Pitobash",
+      "Hugh Laurie",
+      "Anupam Kher",
+      "Bipasha Basu"
+    ],
+    "rating": 7.6,
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/2b/Monkey_Man_film.jpg",
+    "trailer": "https://www.youtube.com/watch?v=k42gFf2fLO8",
+    "description": "An intense action thriller following an ex-convict (Dev Patel) as he navigates the dangerous underbelly of Mumbai's criminal world, seeking vengeance against those who wronged him. Sharlto Copley adds depth as a cunning antagonist, with supporting roles by Pitobash and Hugh Laurie bringing layers of intrigue and complexity. With gritty visuals, heart-pounding action, and a narrative steeped in betrayal and redemption, the film portrays a compelling quest for justice.",
+    "isNowShowing": true,
+    "ageRestriction": "16+"
+  },
+  {
+    "id": "9",
+    "title": "Interstellar",
+    "year": 2014,
+    "genre": [
+      "Sci-Fi",
+      "Drama"
+    ],
+    "duration": 169,
+    "country": "USA",
+    "director": "Christopher Nolan",
+    "producer": "Emma Thomas",
+    "studio": "Syncopy",
+    "cast": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain",
+      "Matt Damon",
+      "Michael Caine",
+      "Timothée Chalamet"
+    ],
+    "rating": 8.6,
+    "poster": "https://m.media-amazon.com/images/I/514zBLkyJcL.jpg",
+    "trailer": "https://www.youtube.com/watch?v=zSWdZVtXT7E",
+    "description": "As Earth's environmental collapse intensifies, Cooper (Matthew McConaughey) and a daring group of astronauts traverse a wormhole, exploring distant worlds in search of a new habitable planet. Enhanced by visionary director Christopher Nolan's profound storytelling and visually stunning depictions of space, this film delves deeply into human courage, sacrifice, and survival. The narrative pushes the boundaries of scientific imagination and emotional depth, offering a captivating, emotionally charged exploration of humanity’s fate.",
+    "isNowShowing": true,
+    "ageRestriction": "13+"
+  },
+  {
+    "id": "10",
+    "title": "Darkest Hour",
+    "year": 2017,
+    "genre": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "duration": 125,
+    "country": "USA",
+    "director": "Joe Wright",
+    "producer": "Tim Bevan",
+    "studio": "Working Title Films",
+    "cast": [
+      "Gary Oldman",
+      "Kristin Scott Thomas",
+      "Lily James",
+      "Ben Mendelsohn",
+      "Stephen Dillane",
+      "Ronald Pickup"
+    ],
+    "rating": 7.4,
+    "poster": "https://m.media-amazon.com/images/I/71Bn4TUjTFL.jpg",
+    "trailer": "https://www.youtube.com/watch?v=mfqOwl9Nnbg",
+    "description": "Winston Churchill (Gary Oldman) faces one of the defining moments of World War II, stepping into the role of Prime Minister at a critical point in Britain's history. As Nazi forces sweep across Europe, Churchill grapples with intense pressure from political rivals, his own doubts, and the desperate situation at Dunkirk. Supported by his loyal wife, Clementine (Kristin Scott Thomas), and his personal secretary Elizabeth Layton (Lily James), Churchill makes decisions that change the course of history. Powerful performances, stunning cinematography, and meticulous historical accuracy capture the essence of leadership, determination, and courage during Britain's darkest hour.",
+    "isNowShowing": true,
+    "ageRestriction": "12+"
+  },
+  {
+    "id": "11",
+    "title": "Joker",
+    "year": 2019,
+    "genre": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "duration": 122,
+    "country": "USA",
+    "director": "Todd Phillips",
+    "producer": "Todd Phillips",
+    "studio": "Warner Bros.",
+    "cast": [
+      "Joaquin Phoenix",
+      "Robert De Niro",
+      "Zazie Beetz",
+      "Frances Conroy",
+      "Brett Cullen",
+      "Shea Whigham"
+    ],
+    "rating": 8.4,
+    "poster": "https://content.rozetka.com.ua/goods/images/big/19479089.jpg",
+    "trailer": "https://www.youtube.com/watch?v=zAGVQLHvwOY",
+    "description": "Arthur Fleck, a struggling stand-up comedian in Gotham City, faces constant rejection and societal neglect. Descending into mental illness and isolation, he eventually transforms into the infamous criminal known as the Joker. Joaquin Phoenix delivers a haunting and Oscar-winning performance, exploring themes of identity, madness, and societal failure in a gritty psychological character study set in a bleak urban landscape.",
+    "isNowShowing": true,
+    "ageRestriction": "18+"
+  },
+  {
+    "id": "12",
+    "title": "Maleficent",
+    "year": 2014,
+    "genre": [
+      "Adventure",
+      "Family",
+      "Fantasy"
+    ],
+    "duration": 97,
+    "country": "USA",
+    "director": "Robert Stromberg",
+    "producer": "Joe Roth",
+    "studio": "Walt Disney Pictures",
+    "cast": [
+      "Angelina Jolie",
+      "Elle Fanning",
+      "Sharlto Copley",
+      "Sam Riley",
+      "Imelda Staunton",
+      "Lesley Manville"
+    ],
+    "rating": 7,
+    "poster": "https://cdn.europosters.eu/image/750/maleficent-one-sheet-i23590.jpg",
+    "trailer": "https://www.youtube.com/watch?v=5x6i5JmaCKM",
+    "description": "Told from the perspective of one of Disney's most iconic villains, 'Maleficent' reveals the untold story of the misunderstood fairy. After suffering a deep betrayal, Maleficent's heart turns to stone, leading her to place a curse on the newborn daughter of King Stefan. However, as the child grows, Maleficent begins to realize that love and redemption may still be possible. A dark and visually enchanting reimagining of the classic 'Sleeping Beauty.'",
+    "isNowShowing": true,
+    "ageRestriction": "6+"
+  },
+  {
+    "id": "13",
+    "title": "Parasite",
+    "year": 2019,
+    "genre": [
+      "Comedy",
+      "Drama",
+      "Thriller"
+    ],
+    "duration": 132,
+    "country": "South Korea",
+    "director": "Bong Joon-ho",
+    "producer": "Bong Joon-ho",
+    "studio": "Barunson E&A",
+    "cast": [
+      "Song Kang-ho",
+      "Lee Sun-kyun",
+      "Cho Yeo-jeong",
+      "Choi Woo-shik",
+      "Park So-dam",
+      "Lee Jung-eun"
+    ],
+    "rating": 8.6,
+    "poster": "https://m.media-amazon.com/images/I/91KArYP03YL._AC_UF894,1000_QL80_.jpg",
+    "trailer": "https://www.youtube.com/watch?v=SEUXfv87Wpk",
+    "description": "Winner of the Palme d'Or and the Academy Award for Best Picture, 'Parasite' follows a destitute family in Seoul who scheme to become employed by a wealthy household by posing as unrelated, highly qualified individuals. As the lines between class, survival, and deception blur, a shocking twist reveals the dark underbelly of inequality. Bong Joon-ho’s masterpiece is a razor-sharp social commentary wrapped in suspense, drama, and unexpected humor.",
+    "isNowShowing": true,
+    "ageRestriction": "18+"
+  },
+  {
+    "id": "14",
+    "title": "The Wolf of Wall Street",
+    "year": 2013,
+    "genre": [
+      "Biography",
+      "Comedy",
+      "Crime"
+    ],
+    "duration": 180,
+    "country": "USA",
+    "director": "Martin Scorsese",
+    "producer": "Martin Scorsese",
+    "studio": "Paramount Pictures",
+    "cast": [
+      "Leonardo DiCaprio",
+      "Jonah Hill",
+      "Margot Robbie",
+      "Kyle Chandler",
+      "Rob Reiner",
+      "Matthew McConaughey"
+    ],
+    "rating": 8.2,
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH3apVAChDoOdWfhfYpyXV6GLqnRIosZzKvg&s",
+    "trailer": "https://www.youtube.com/watch?v=iszwuX1AK6A",
+    "description": "Based on the true story of Jordan Belfort, 'The Wolf of Wall Street' chronicles his rise from an ambitious stockbroker to a corrupt, drug-fueled millionaire at the heart of a massive financial scandal. With outrageous excess, fast-paced storytelling, and dynamic performances, Martin Scorsese's film is a satirical and unrelenting look at greed, indulgence, and the darker sides of the American Dream.",
+    "isNowShowing": true,
+    "ageRestriction": "18+"
+  },
+  {
+    "id": "15",
+    "title": "Whiplash",
+    "year": 2014,
+    "genre": [
+      "Drama",
+      "Music"
+    ],
+    "duration": 107,
+    "country": "USA",
+    "director": "Damien Chazelle",
+    "producer": "Jason Blum",
+    "studio": "Blumhouse Productions",
+    "cast": [
+      "Miles Teller",
+      "J.K. Simmons",
+      "Melissa Benoist",
+      "Paul Reiser",
+      "Austin Stowell",
+      "Chris Mulkey"
+    ],
+    "rating": 8.5,
+    "poster": "https://m.media-amazon.com/images/M/MV5BMDFjOWFkYzktYzhhMC00NmYyLTkwY2EtYjViMDhmNzg0OGFkXkEyXkFqcGc@._V1_.jpg",
+    "trailer": "https://www.youtube.com/watch?v=7d_jQycdQGo",
+    "description": "A young and ambitious jazz drummer, Andrew Neiman (Miles Teller), enrolls at a prestigious music conservatory, where he encounters Terence Fletcher (J.K. Simmons), a ruthless and demanding instructor who pushes his students to their mental and physical limits. As Andrew strives for greatness, their relationship becomes a brutal psychological battle of perfection versus pressure. 'Whiplash' is a gripping and emotionally charged drama about obsession, discipline, and the high cost of artistic excellence.",
+    "isNowShowing": true,
+    "ageRestriction": "16+"
+  },
+  {
+    "id": "16",
+    "title": "Superbad",
+    "year": 2007,
+    "genre": [
+      "Comedy",
+      "Teen"
+    ],
+    "duration": 113,
+    "country": "USA",
+    "director": "Greg Mottola",
+    "producer": "Judd Apatow",
+    "studio": "Columbia Pictures",
+    "cast": [
+      "Michael Cera",
+      "Jonah Hill",
+      "Seth Rogen",
+      "Christopher Mintz-Plasse",
+      "Emma Stone",
+      "Bill Hader"
+    ],
+    "rating": 7.6,
+    "poster": "https://m.media-amazon.com/images/I/519Ar0PC8iL._AC_UF894,1000_QL80_.jpg",
+    "trailer": "https://www.youtube.com/watch?v=4eaZ5h2xK7E",
+    "description": "Best friends Evan (Michael Cera) and Seth (Jonah Hill) are two awkward high school seniors on a mission to enjoy one last wild night before graduation. With plans to buy alcohol for a party and finally impress their crushes, things spiral out of control when their plan involves a fake ID and a chaotic run-in with two inept cops. 'Superbad' is a hilarious coming-of-age comedy that blends outrageous humor with genuine heart, capturing the awkwardness and intensity of teenage friendships.",
+    "isNowShowing": true,
+    "ageRestriction": "16+"
+  }
+]
