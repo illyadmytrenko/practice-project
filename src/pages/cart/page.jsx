@@ -39,7 +39,7 @@ export default function Cart() {
   useEffect(() => {
     axios
       //.get(`http://localhost:5050/api/movies/${movieId}`)
-      .get(`http://localhost:5000/api/movies/${movieId}`)
+      .get(`https://practice-project-f8zc.onrender.com/api/movies/${movieId}`)
       .then((response) => {
         setMovie(response.data);
       })
@@ -80,25 +80,28 @@ export default function Cart() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/api/payment", {
-        //const response = await fetch("http://localhost:5050/api/payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: totalPrice * 100,
-          redirectUrl: "http://localhost:5173/",
-          name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
-          qty: chosenSeats.length,
-          sum: price * 100,
-          icon: movie.poster,
-          userId,
-          movieId,
-          date,
-          time,
-          hall,
-          seats: chosenSeats,
-        }),
-      });
+      const response = await fetch(
+        "https://practice-project-f8zc.onrender.com/api/payment",
+        {
+          //const response = await fetch("http://localhost:5050/api/payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: totalPrice * 100,
+            redirectUrl: "https://stirring-croquembouche-b12167.netlify.app/",
+            name: `${movie.title} - ${formattedDate}, ${formattedStartTime}–${formattedEndTime}`,
+            qty: chosenSeats.length,
+            sum: price * 100,
+            icon: movie.poster,
+            userId,
+            movieId,
+            date,
+            time,
+            hall,
+            seats: chosenSeats,
+          }),
+        }
+      );
 
       const data = await response.json();
 

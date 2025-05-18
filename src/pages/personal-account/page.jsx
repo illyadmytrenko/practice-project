@@ -26,10 +26,12 @@ export default function PersonalAccount() {
       return;
     }
 
-     axios.get("http://localhost:5000/api/users").then((res) => {
-      const foundUser = res.data.find((u) => u.id === stored.id);
-      setUser(foundUser);
-    });
+    axios
+      .get("https://practice-project-f8zc.onrender.com/api/users")
+      .then((res) => {
+        const foundUser = res.data.find((u) => u.id === stored.id);
+        setUser(foundUser);
+      });
   }, [navigate]);
 
   useEffect(() => {

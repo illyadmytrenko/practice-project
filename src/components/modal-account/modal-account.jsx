@@ -50,8 +50,8 @@ export default function ModalAccount() {
   const onSubmit = async (data) => {
     const url =
       mode === "login"
-        ? "http://localhost:5000/api/users/login"
-        : "http://localhost:5000/api/users/register";
+        ? "https://practice-project-f8zc.onrender.com/api/users/login"
+        : "https://practice-project-f8zc.onrender.com/api/users/register";
 
     try {
       const response = await axios.post(url, data, {

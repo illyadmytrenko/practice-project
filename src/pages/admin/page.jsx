@@ -296,7 +296,7 @@ export default function AdminPage() {
     try {
       const { data: createdMovie } = await axios.post(
         //"http://localhost:5050/api/movies",
-        "http://localhost:5000/api/movies",
+        "https://practice-project-f8zc.onrender.com/api/movies",
         body
       );
 
@@ -448,7 +448,7 @@ export default function AdminPage() {
       };
       const { data: updated } = await axios.put(
         //`http://localhost:5050/api/movies/${editMovieData.id}`,
-        `http://localhost:5000/api/movies/${editMovieData.id}`,
+        `https://practice-project-f8zc.onrender.com/api/movies/${editMovieData.id}`,
         body
       );
       setMovies((prev) => prev.map((m) => (m.id === updated.id ? updated : m)));
@@ -466,7 +466,9 @@ export default function AdminPage() {
   const confirmDelete = async () => {
     try {
       //await axios.delete(`http://localhost:5050/api/movies/${deleteId}`);
-      await axios.delete(`http://localhost:5000/api/movies/${deleteId}`);
+      await axios.delete(
+        `https://practice-project-f8zc.onrender.com/api/movies/${deleteId}`
+      );
       setMovies((prev) => prev.filter((m) => m.id !== deleteId));
       setDeleteId(null);
     } catch (err) {
@@ -488,7 +490,7 @@ export default function AdminPage() {
     try {
       const { data: updated } = await axios.put(
         // `http://localhost:5050/api/schedule/${scheduleToEdit.id}`,
-        `http://localhost:5000/api/schedule/${scheduleToEdit.id}`,
+        `https://practice-project-f8zc.onrender.com/api/schedule/${scheduleToEdit.id}`,
         newScheduleItem
       );
       setScheduleData((prev) =>
@@ -517,7 +519,7 @@ export default function AdminPage() {
     try {
       const { data: created } = await axios.post(
         // "http://localhost:5050/api/schedule",
-        "http://localhost:5000/api/schedule",
+        "https://practice-project-f8zc.onrender.com/api/schedule",
         newScheduleItem
       );
       setScheduleData((prev) =>
@@ -553,7 +555,7 @@ export default function AdminPage() {
     try {
       await axios.delete(
         // `http://localhost:5050/api/schedule/${scheduleToDelete.id}`
-        `http://localhost:5000/api/schedule/${scheduleToDelete.id}`
+        `https://practice-project-f8zc.onrender.com/api/schedule/${scheduleToDelete.id}`
       );
       setScheduleData((prev) =>
         prev.map((hallObj) => ({
@@ -580,18 +582,18 @@ export default function AdminPage() {
     // setLoadingStats(true);
     // axios.get("http://localhost:5050/api/payment/stats")
     axios
-      .get("http://localhost:5000/api/movies")
+      .get("https://practice-project-f8zc.onrender.com/api/movies")
       .then((res) => setMovies(res.data));
     axios
-      .get("http://localhost:5000/api/users")
+      .get("https://practice-project-f8zc.onrender.com/api/users")
       .then((res) => setUsers(res.data));
     axios
-      .get("http://localhost:5000/api/schedule")
+      .get("https://practice-project-f8zc.onrender.com/api/schedule")
       .then((res) => setScheduleData(res.data));
 
     setLoadingStats(true);
     axios
-      .get("http://localhost:5000/api/payment/stats")
+      .get("https://practice-project-f8zc.onrender.com/api/payment/stats")
       .then((res) => {
         setStats(res.data);
         setErrorStats(null);

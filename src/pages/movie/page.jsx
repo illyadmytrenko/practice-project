@@ -76,7 +76,7 @@ export default function MoviePage() {
   useEffect(() => {
     axios
       //.get(`http://localhost:5050/api/movies/${id}`)
-       .get(`http://localhost:5000/api/movies/${id}`)
+      .get(`https://practice-project-f8zc.onrender.com/api/movies/${id}`)
       .then((response) => {
         setMovie(response.data);
       })
